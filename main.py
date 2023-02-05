@@ -10,8 +10,8 @@ import sys
 from NetScoreCalculation.MetricCalculation.Licensing import evaluate_readme
 from Submodules.repo_clone import clone_repo
 
-url = sys.argv[1]
-repo = clone_repo(url)
-scoring = evaluate_readme(repo)
-print(scoring)
+url = sys.argv[1]                                                               #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
+repo = clone_repo(url)                                                          #Clones the repository from the given URL, and a GitPython Repo object is stored in repo
+license_score = evaluate_readme(repo)                                           #license_score is determined by the evaluate_readme function in Licensing.py
+print(license_score)
 
