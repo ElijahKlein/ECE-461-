@@ -10,23 +10,7 @@
 #Using GitPython for 'import git'
 import git
 import os
-                                                                            #Checks if the README exists, and evaluates it if it does
-def evaluate_readme(repo):
-    scoring = 0
-    try:                                                                    #Open the targetFile (README) for compatability checking
-        targetFile = repo.working_tree_dir
-        with open(os.path.join(targetFile, 'README.md'), 'r') as f:
-            if(f.read().find('MIT License')):
-                scoring = 1
-            else:                                                           #If not located in the README, check the LICENSE file for compatability
-                try:
-                    with open(os.path.join(targetFile, 'LICENSE')) as f:
-                        if(f.read().find('MIT License')):
-                            scoring = 1
-                except:
-                    scoring = 0
-        f.close()
-    except:                                                                 #If the clone_from fails, the scoring automatically is a 0, as there is not README to check for compatability
-        scoring = 0
-        
-    return scoring
+from Submodules.readme import checkLicensing
+
+def calculateLicenseScore(repo):
+    return checkLicensing(repo)                                        #Uses the readme.py functions to check for licensing, then returns either 1 or 0 depending on compatibility
