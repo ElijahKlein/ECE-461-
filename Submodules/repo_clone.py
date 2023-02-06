@@ -12,9 +12,7 @@ import os
 
 def clone_repo(url):
     try:
-        #Clones the repo from the provided URL into 'temp' and returns the Repo (GitPython) structure
-        clonedRepo = git.Repo.clone_from(url, 'C:/temp/' + os.path.basename(url))
+        clonedRepo = git.Repo.clone_from(url, 'C:/temp/' + os.path.basename(url))       #Clones the repo from the provided URL into 'temp' and returns the Repo (GitPython) structure
         return clonedRepo
     except:
-        #Cloning failed, provides an error code
-        print("Error, provide new valid repository URL")
+        print("Error, provide new valid repository URL")                                #Cloning failed, provides an error code
