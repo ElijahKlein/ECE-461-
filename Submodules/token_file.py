@@ -1,5 +1,5 @@
 """ 
-Name: Matthew Nale
+Name: Eric Chen
     Date of Last Edit: 2/8/2023
     
     Purpose: Established connection with GitHub REST API
