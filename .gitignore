@@ -1,2 +1,3 @@
 token_file.py 
 clone_dir/
+__pycache__/
