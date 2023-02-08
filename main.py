@@ -9,9 +9,13 @@
 import sys
 from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
+from Submodules.issues import getIssuesByType
 
 url = sys.argv[1]                                                               #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
 repo = clone_repo(url)                                                          #Clones the repository from the given URL, and a GitPython Repo object is stored in repo
 license_score = calculateLicenseScore(repo)                                     #license_score is determined by the evaluate_readme function in Licensing.py
-print(license_score)
+print(f'License scoring: {license_score}')
+numIssues = getIssuesByType(url, 'all')                                         #Example usage of the getIssuesByTypes function
+print(f'Number of open and closed issues: {numIssues}')
+
 
