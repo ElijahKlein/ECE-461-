@@ -16,7 +16,7 @@ import sys
 #getIssuesByType can be slow depending on the amount of issues. Look into another way of doing this. Type can be either 'closed', 'open', or 'all'
 def getIssuesByType(url, type):
     count = 0                                                  #Count used to count the type of issues being found
-    g = Github('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')     #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
+    g = Github('ACCESS TOKEN HERE')                            #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
     try:
         repo = g.get_repo(url.split("github.com/", 1)[1])      #Obtains the name identifier from the provided url, and obtains that repo from the REST API
         issuesAndPull = repo.get_issues(state=type)            #Get the issues and pull requests depending on the provided state

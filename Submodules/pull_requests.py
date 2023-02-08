@@ -15,7 +15,7 @@ from datetime import datetime                                                   
 
 #getMostRecentPull will return the date of the most recent pull request of the provided URL, sorted by type (closed, open, all)
 def getMostRecentPull(url, type):
-    g = Github('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')                          #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
+    g = Github('ACCESS TOKEN HERE')                                                 #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
     try:
         repo = g.get_repo(url.split("github.com/", 1)[1])
         issuesAndPull = repo.get_issues(state=type)                                 #Get the issues and pull requests depending on the provided state
@@ -29,7 +29,7 @@ def getMostRecentPull(url, type):
 
 #getAllPullDates will return a list of datetimes of all Pull Requests of the provided type
 def getAllPullDates(url, type):
-    g = Github('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')
+    g = Github('ACCESS TOKEN HERE')                                                 #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
     try:
         repo = g.get_repo(url.split("github.com/", 1)[1])
         issuesAndPull = repo.get_issues(state=type)
