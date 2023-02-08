@@ -8,11 +8,12 @@
 """
 
 import git
-import os
+import os.path as path 
 
 def clone_repo(url):
     try:
-        clonedRepo = git.Repo.clone_from(url, 'C:/temp/' + os.path.basename(url))       #Clones the repo from the provided URL into 'temp' and returns the Repo (GitPython) structure
+        file_loc = path.dirname(__file__) + '/../clone_dir/' + path.basename(url)
+        clonedRepo = git.Repo.clone_from(url, file_loc)       #Clones the repo from the provided URL into 'clone_dir' and returns the Repo (GitPython) structure
         return clonedRepo
     except:
         print("Error, provide new valid repository URL")                                #Cloning failed, provides an error code
