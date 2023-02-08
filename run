@@ -1,0 +1,39 @@
+#!/bin/bash
+
+installFunc () {
+	echo "running install function" #TODO - Remove in final
+}
+buildFunc () {
+	echo "running build function" #TODO - Remove in final
+	rustc ErrorTesting/ErrorTest.rs
+
+}
+testFunc () {
+	echo "running test function" #TODO - Remove in final
+	#./ErrorTesting/ErrorTest
+	./ErrorTest
+}
+netScoreFunc () {
+	echo "running net score function" #TODO - Remove in final
+}
+
+if [[ "$@" = "install" ]]; then
+	installFunc
+
+elif [[ "$@" = "build" ]]; then
+	buildFunc
+
+elif [[ "$@" = "test" ]]; then
+	testFunc
+
+elif [[ "$@" = "URL File" ]]; then #TODO - this needs to change, need to check if we need to do input checking
+	netScoreFunc
+
+fi
+
+for i in 1 2 3 4 5
+do 
+	echo "Welcome $i times"
+done
+
+
