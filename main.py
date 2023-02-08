@@ -22,7 +22,7 @@ print(f'Number of open issues: {numIssues}')
 
 recentPull = Submodules.pull_requests.getMostRecentPull(url, 'closed')          #Example usage of the getMostRecentPull function, which obtaines the most recent closed pull request
 print(f'The most recent pull request was: {recentPull} time ago')
-pullDates = Submodules.pull_requests.getAllPullDates(url, 'closed')             #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
+#pullDates = Submodules.pull_requests.getAllPullDates(url, 'closed')             #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
 #print(pullDates)
 
 

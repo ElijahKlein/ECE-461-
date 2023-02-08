@@ -8,16 +8,15 @@ Name: Matthew Nale
 
 """
 
-from github import Github                                                           #Using PyGitHub for interaction with REST API
 import os
 import sys
+from Submodules.token_file import *
 from datetime import datetime                                                       #Used for time calculations
 
 #getMostRecentPull will return the date of the most recent pull request of the provided URL, sorted by type (closed, open, all)
 def getMostRecentPull(url, type):
-    g = Github('ACCESS TOKEN HERE')                                                 #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
     try:
-        repo = g.get_repo(url.split("github.com/", 1)[1])
+        repo = token.get_repo(url.split("github.com/", 1)[1])
         issuesAndPull = repo.get_issues(state=type)                                 #Get the issues and pull requests depending on the provided state
         index = 0
         mostRecent = issuesAndPull[index]
@@ -29,9 +28,8 @@ def getMostRecentPull(url, type):
 
 #getAllPullDates will return a list of datetimes of all Pull Requests of the provided type
 def getAllPullDates(url, type):
-    g = Github('ACCESS TOKEN HERE')                                                 #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
     try:
-        repo = g.get_repo(url.split("github.com/", 1)[1])
+        repo = token.get_repo(url.split("github.com/", 1)[1])
         issuesAndPull = repo.get_issues(state=type)
         datesList = []
         for pulls in issuesAndPull:

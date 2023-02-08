@@ -1,5 +1,5 @@
 """ Name: Matthew Nale
-    Date of Last Edit: 2/5/2023
+    Date of Last Edit: 2/8/2023
     
     Purpose: Cloning the given repository from the provided URL. 
 
@@ -8,14 +8,15 @@
 """
 
 import git
-import os
+import os.path as path 
 
 def clone_repo(url):
     try:
-        return git.Repo.clone_from(url, 'C:/temp/' + os.path.basename(url))             #Clones the repo from the provided URL into 'temp' and returns the Repo (GitPython) structure
+        file_loc = path.dirname(__file__) + '/../clone_dir/' + path.basename(url)
+        return git.Repo.clone_from(url, file_loc)                                                   #Clones the repo from the provided URL into 'clone_dir' and returns the Repo (GitPython) structure
     except:
-        if(os.path.exists('C:/temp/' + os.path.basename(url))):
+        if(path.exists(path.dirname(__file__) + '/../clone_dir/' + path.basename(url))):
             try:
-                return git.Repo('C:/temp/' + os.path.basename(url))
+                return git.Repo(path.dirname(__file__) + '/../clone_dir/' + path.basename(url))     #If the path already exists (Already cloned locally), return the Repo object of the instance
             except: 
-                print("Error, provide new valid repository URL")                        #Cloning failed, provides an error code
+                print("Error, provide new valid repository URL")                                    #Cloning failed, provides an error code
