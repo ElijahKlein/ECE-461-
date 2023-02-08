@@ -10,12 +10,19 @@ import sys
 from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
 from Submodules.issues import getIssuesByType
+import Submodules.pull_requests
 
 url = sys.argv[1]                                                               #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
 repo = clone_repo(url)                                                          #Clones the repository from the given URL, and a GitPython Repo object is stored in repo
 license_score = calculateLicenseScore(repo)                                     #license_score is determined by the evaluate_readme function in Licensing.py
 print(f'License scoring: {license_score}')
-numIssues = getIssuesByType(url, 'all')                                         #Example usage of the getIssuesByTypes function
-print(f'Number of open and closed issues: {numIssues}')
+
+numIssues = getIssuesByType(url, 'open')                                        #Example usage of the getIssuesByTypes function, which obtains the number of open issues
+print(f'Number of open issues: {numIssues}')
+
+recentPull = Submodules.pull_requests.getMostRecentPull(url, 'closed')          #Example usage of the getMostRecentPull function, which obtaines the most recent closed pull request
+print(f'The most recent pull request was: {recentPull} time ago')
+#pullDates = Submodules.pull_requests.getAllPullDates(url, 'closed')             #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
+#print(pullDates)
 
 
