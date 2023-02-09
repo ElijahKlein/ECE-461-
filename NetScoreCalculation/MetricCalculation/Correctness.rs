@@ -1,5 +1,5 @@
  /*  Name: Matthew Nale
-  *  Date of Last Edit: 2/8/2023
+  *  Date of Last Edit: 2/9/2023
   *
   *  Purpose: Calculate Correctness Metric of a given Github Repository
   * 
@@ -10,7 +10,7 @@
 use std::env;
 
 //calculate_percentage will calculate the degree of correctness depending on open issues and number of stars
-pub fn calculate_percentage(open: f64, stars: f64) -> f64{       
+pub fn calculate_correctness(open: f64, stars: f64) -> f64{       
     //Grabs the ratio of open/total issues to users
     let total_weighting : f64 = open / stars;
 
@@ -58,8 +58,8 @@ pub fn calculate_percentage(open: f64, stars: f64) -> f64{
 //Best to compile and use NetScore.rs instead. Used only for local testing
 fn main() {
     let args : Vec<String> = env::args().collect();                         //Collects the argv values into a vector called args
-    let open : f64 = args[1].parse().unwrap();                              //Converts the string values into a i32 value 
+    let open : f64 = args[1].parse().unwrap();                              //Converts the string values into a f64 value 
     let stars : f64 = args[2].parse().unwrap();
-    let total_weighting = calculate_percentage(open, stars);                //Calls the calculate_percentage to find the correctiveness base value
-    println!("{total_weighting}")
+    let total_weighting = calculate_correctness(open, stars);               //Calls the calculate_percentage to find the correctiveness base value
+    println!("Total weighting: {total_weighting}");
 }

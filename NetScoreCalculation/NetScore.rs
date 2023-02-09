@@ -1,5 +1,5 @@
-/*  Name:
- *  Date of Last Edit:
+/*  Name: Matthew Nale
+ *  Date of Last Edit: 2/9/2023
  *
  *  Purpose: Calculate Net Score of a given Repository 
  *
@@ -16,12 +16,26 @@ use std::env;
 #[path = "MetricCalculation/Responsiveness.rs"] mod Responsiveness;
 
 
-//Main file used for testing. Compile command rustc needs a main function as well, due to not being able to compile libraries
+//*Main file used for testing. Compile command rustc needs a main function as well, due to not being able to compile libraries
 //*Compile NetScore.rs with the 'rustc NetScore.rs' command, and run the executable with 3 args (open issues, closed issues, users).
+
+
+//? Uncomment this block to test the Correctness.rs function. Takes 2 argv values (open issues, total stars)
+/*
 fn main() {
     let args : Vec<String> = env::args().collect();                                     //Collects the argv values into a vector called args
     let open : f64 = args[1].parse().unwrap();                                          //Converst the string values into a i32 value 
     let stars : f64 = args[2].parse().unwrap();
-    let correct_base = Correctness::calculate_percentage(open, stars);          //Calls the calculate_percentage to find the correctiveness base value
+    let correct_base = Correctness::calculate_correctness(open, stars);                 //Calls the calculate_percentage to find the correctiveness base value
     println!("Base Correctness Weighting is: {correct_base}");
+}*/
+
+//? Uncomment this block to test the RampUp.rs function. Takes 2 argv values (readme size, average comments per file)
+
+fn main() {
+    let args : Vec<String> = env::args().collect();                                     //Collects the argv values into a vector called args
+    let readme_size : f64 = args[1].parse().unwrap();                                   //Converst the string values into a i32 value 
+    let num_comments : f64 = args[2].parse().unwrap();
+    let readme_weight = RampUp::calculate_readme(readme_size);
+    println!("README size weighting: {readme_weight}");
 }
