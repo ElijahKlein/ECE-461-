@@ -30,11 +30,7 @@ def getIssuesByType(url, type):
 def getUsers(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtains the repo from REST API
-        stars = repo.stargazers_count                               #TODO NEEDS WORK. Will have to obtain a combination of stars, forks, and watchers
-        watchers = repo.subscribers_count
-        forks = repo.get_forks().totalCount
-        print(f'Stars: {stars}    Watchers: {watchers}    Forks: {forks}')
-        return (0.3 * stars) + (0.2 * forks) + (0.5 * watchers)
+        return repo.stargazers_count                                #Returns the amount of stars of the project, which gives an estimate at the number of users
         
     except:
         print("Error in getUsers")                                  #Except case for potential invalid GitHub links
