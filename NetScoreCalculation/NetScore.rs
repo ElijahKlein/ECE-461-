@@ -9,7 +9,7 @@
 
 use std::env;
 
-//TODO This is a way to import Rust modules into other Rust files. License.py is excluded due to weird interactions
+//TODO This is a way to import Rust modules into other Rust files. License.py is excluded due to weird interactions due to Python
 #[path = "MetricCalculation/Correctness.rs"] mod Correctness;
 #[path = "MetricCalculation/RampUp.rs"] mod RampUp;
 #[path = "MetricCalculation/BusFactor.rs"] mod BusFactor;

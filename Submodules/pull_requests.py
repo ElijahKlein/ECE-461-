@@ -35,9 +35,9 @@ def getAllPullDates(url, type):
         for pulls in issuesAndPull:                                                 
             if(pulls.pull_request):                                                 #If there is a pull request, add the closed date to the datesList
                 datesList.append(pulls.closed_at)
-        return datesList                                                            #Return list of datetime objects, in list format
     except:
         print("Error in getAllPullDates")
+    return datesList
         
 """This below can be used for testing. Comment when not being used, or delete when finishing project
 url = sys.argv[1]

@@ -7,9 +7,7 @@
     check for existance of a LICENSE file for compatable licensing
     
 """
-#Using GitPython for 'import git'
-import git
-import os
+
 from Submodules.readme import checkLicensing
 
 def calculateLicenseScore(repo):
