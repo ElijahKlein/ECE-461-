@@ -9,7 +9,7 @@
 
 use std::env;
 
-//TODO This is a way to import Rust modules into other Rust files. License.py is excluded due to weird interactions
+//TODO This is a way to import Rust modules into other Rust files. License.py is excluded due to weird interactions due to Python
 #[path = "MetricCalculation/Correctness.rs"] mod Correctness;
 #[path = "MetricCalculation/RampUp.rs"] mod RampUp;
 #[path = "MetricCalculation/BusFactor.rs"] mod BusFactor;
@@ -21,8 +21,7 @@ use std::env;
 fn main() {
     let args : Vec<String> = env::args().collect();                                     //Collects the argv values into a vector called args
     let open : f64 = args[1].parse().unwrap();                                          //Converst the string values into a i32 value 
-    let closed : f64 = args[2].parse().unwrap();
-    let users : f64 = args[3].parse().unwrap();
-    let correct_base = Correctness::calculate_percentage(open, closed, users);          //Calls the calculate_percentage to find the correctiveness base value
+    let stars : f64 = args[2].parse().unwrap();
+    let correct_base = Correctness::calculate_percentage(open, stars);          //Calls the calculate_percentage to find the correctiveness base value
     println!("Base Correctness Weighting is: {correct_base}");
 }
