@@ -14,8 +14,7 @@ import os.path as path
 def clone_repo(url):
     try:
         gv.set_file_loc(url)
-        print(gv.file_loc)
-        return git.Repo.clone_from(url, gv.file_loc)                                                   #Clones the repo from the provided URL into 'clone_dir' and returns the Repo (GitPython) structure
+        return git.Repo.clone_from(url, gv.file_loc)                                                #Clones the repo from the provided URL into 'clone_dir' and returns the Repo (GitPython) structure
     except:
         if(path.exists(path.dirname(__file__) + '/../clone_dir/' + path.basename(url))):
             try:

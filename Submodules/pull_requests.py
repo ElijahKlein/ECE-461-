@@ -16,7 +16,7 @@ from datetime import datetime                                                   
 #getMostRecentPull will return the date of the most recent pull request of the provided URL, sorted by type (closed, open, all)
 def getMostRecentPull(url, type):
     try:
-        repo = gv.token.get_repo(url.split("github.com/", 1)[1])
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])                    #Obtain the appropriate repo from REST API
         issuesAndPull = repo.get_issues(state=type)                                 #Get the issues and pull requests depending on the provided state
         index = 0
         mostRecent = issuesAndPull[index]
@@ -29,13 +29,13 @@ def getMostRecentPull(url, type):
 #getAllPullDates will return a list of datetimes of all Pull Requests of the provided type
 def getAllPullDates(url, type):
     try:
-        repo = gv.token.get_repo(url.split("github.com/", 1)[1])
-        issuesAndPull = repo.get_issues(state=type)
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])                    #Obtain the appropriate repo from REST API
+        issuesAndPull = repo.get_issues(state=type)                                 #Grabs the issues depending on provided type
         datesList = []
-        for pulls in issuesAndPull:
-            if(pulls.pull_request):
+        for pulls in issuesAndPull:                                                 
+            if(pulls.pull_request):                                                 #If there is a pull request, add the closed date to the datesList
                 datesList.append(pulls.closed_at)
-        return datesList
+        return datesList                                                            #Return list of datetime objects, in list format
     except:
         print("Error in getAllPullDates")
         

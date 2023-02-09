@@ -17,10 +17,12 @@ use std::env;
 
 
 //Main file used for testing. Compile command rustc needs a main function as well, due to not being able to compile libraries
+//*Compile NetScore.rs with the 'rustc NetScore.rs' command, and run the executable with 3 args (open issues, closed issues, users).
 fn main() {
-    let args : Vec<String> = env::args().collect();                 //Collects the argv values into a vector called args
-    let open : f64 = args[1].parse().unwrap();                      //Converst the string values into a i32 value 
+    let args : Vec<String> = env::args().collect();                                     //Collects the argv values into a vector called args
+    let open : f64 = args[1].parse().unwrap();                                          //Converst the string values into a i32 value 
     let closed : f64 = args[2].parse().unwrap();
     let users : f64 = args[3].parse().unwrap();
-    Correctness::calculate_percentage(open, closed, users);         //Calls the calculate_percentage to find the correctiveness base value
+    let correct_base = Correctness::calculate_percentage(open, closed, users);          //Calls the calculate_percentage to find the correctiveness base value
+    println!("Base Correctness Weighting is: {correct_base}");
 }
