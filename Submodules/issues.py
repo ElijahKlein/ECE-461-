@@ -8,6 +8,8 @@ Name: Matthew Nale
 
 """
 
+#! Add a function to get all users of the repository. This can be done by using get_users(since), where since can be empty or a specific date
+
 
 import os
 import sys
