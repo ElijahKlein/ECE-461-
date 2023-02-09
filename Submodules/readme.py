@@ -30,14 +30,11 @@ def checkLicensing(repo):
         scoring = 0
     return scoring
 
-def checkLength(repo):
-    numLines = 0
+def checkRMLength(repo):
     try:
-        targetFile = os.path.join(repo.working_tree_dir, 'README.md')       
-        with open(targetFile, 'r') as f:                                    
-            for line in f:                                                  #Line by line, checks if lines is non-blank (i.e. actual content), and adds one to counter if true
-                if(line.strip()):
-                    numLines += 1
+        targetFile = os.path.join(repo.working_tree_dir, 'README.md')                                    
+        numLines = sum(1 for line in open(targetFile, 'r'))
+        return numLines
     except:
         print("No possible README to analyze")                              #If cannot open README (doesn't exist), numLines stays 0, which will cause a weight of zero
-    return numLines
+    

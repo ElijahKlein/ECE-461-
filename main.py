@@ -1,4 +1,4 @@
-""" Name: Matthew Nale
+""" Name: Matthew Nale, Eric Chen 
     Date of Last Edit: 2/5/2023
     
     Purpose: Used for testing individual functions and function calls, without having to setup Rust-Python integration
@@ -7,11 +7,11 @@
 """
 
 import sys
-import Submodules.global_var as gv
 from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
 from Submodules.issues import getIssuesByType
 import Submodules.pull_requests
+import Submodules.readme as rm
 
 url = sys.argv[1]                                                               #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
 repo = clone_repo(url)                                                         #Clones the repository from the given URL, and a GitPython Repo object is stored in repo
@@ -23,7 +23,9 @@ print(f'Number of open issues: {numIssues}')
 
 recentPull = Submodules.pull_requests.getMostRecentPull(url, 'closed')          #Example usage of the getMostRecentPull function, which obtaines the most recent closed pull request
 print(f'The most recent pull request was: {recentPull} time ago')
-#pullDates = Submodules.pull_requests.getAllPullDates(url, 'closed')             #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
-#print(pullDates)
+pullDates = Submodules.pull_requests.getAllPullDates(url, 'closed')             #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
+print(pullDates)
 
+numLines = rm.checkRMLength(repo) #DEBUG test RM length, it works
+print("RM lines:", numLines)
 
