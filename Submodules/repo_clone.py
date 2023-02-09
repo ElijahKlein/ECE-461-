@@ -1,4 +1,4 @@
-""" Name: Matthew Nale
+""" Name: Matthew Nale, Eric Chen 
     Date of Last Edit: 2/8/2023
     
     Purpose: Cloning the given repository from the provided URL. 
@@ -8,12 +8,14 @@
 """
 
 import git
-import os.path as path 
+import Submodules.global_var as gv
+import os.path as path
 
 def clone_repo(url):
     try:
-        file_loc = path.dirname(__file__) + '/../clone_dir/' + path.basename(url)
-        return git.Repo.clone_from(url, file_loc)                                                   #Clones the repo from the provided URL into 'clone_dir' and returns the Repo (GitPython) structure
+        gv.set_file_loc(url)
+        print(gv.file_loc)
+        return git.Repo.clone_from(url, gv.file_loc)                                                   #Clones the repo from the provided URL into 'clone_dir' and returns the Repo (GitPython) structure
     except:
         if(path.exists(path.dirname(__file__) + '/../clone_dir/' + path.basename(url))):
             try:
