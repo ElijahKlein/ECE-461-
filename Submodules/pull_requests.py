@@ -10,13 +10,13 @@ Name: Matthew Nale
 
 import os
 import sys
-from Submodules.token_file import *
+import Submodules.global_var as gv
 from datetime import datetime                                                       #Used for time calculations
 
 #getMostRecentPull will return the date of the most recent pull request of the provided URL, sorted by type (closed, open, all)
 def getMostRecentPull(url, type):
     try:
-        repo = token.get_repo(url.split("github.com/", 1)[1])
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])
         issuesAndPull = repo.get_issues(state=type)                                 #Get the issues and pull requests depending on the provided state
         index = 0
         mostRecent = issuesAndPull[index]
@@ -29,7 +29,7 @@ def getMostRecentPull(url, type):
 #getAllPullDates will return a list of datetimes of all Pull Requests of the provided type
 def getAllPullDates(url, type):
     try:
-        repo = token.get_repo(url.split("github.com/", 1)[1])
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])
         issuesAndPull = repo.get_issues(state=type)
         datesList = []
         for pulls in issuesAndPull:
