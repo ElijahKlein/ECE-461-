@@ -21,7 +21,7 @@ print(f'License scoring: {license_score}')
 numIssues = issues.getIssuesByType(url, 'open')                                 #Example usage of the getIssuesByTypes function, which obtains the number of open issues
 print(f'Number of open issues: {numIssues}')
 numDownloads = issues.getUsers(url)                                             #Example usage of the getUsers function, which obtains the number of downloads of the repo
-print(numDownloads)
+print(f'Estimated number of users: {numDownloads}')
 
 recentPull = pulls.getMostRecentPull(url, 'closed')                             #Example usage of the getMostRecentPull function, which obtaines the most recent closed pull request
 print(f'The most recent pull request was: {recentPull} time ago')

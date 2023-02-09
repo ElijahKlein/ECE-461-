@@ -9,30 +9,48 @@
 
 use std::env;
 
-//calculate_percentage will calculate the 70/30 split for open and total issues
-pub fn calculate_percentage(open: f64, total: f64, users: f64) -> f64{       
+//calculate_percentage will calculate the degree of correctness depending on open issues and number of stars
+pub fn calculate_percentage(open: f64, stars: f64) -> f64{       
     //Grabs the ratio of open/total issues to users
-    let mut open_value : f64 = open / users;
-    let mut total_value : f64 = total / users;
+    let total_weighting : f64 = open / stars;
 
-    //Applies the 70/30 weighting for values
-    //TODO Weighting needs fixing. This below does not work correctly completely due to not knowing the users
-    open_value = open_value * 0.7;
-    total_value = total_value * 0.3;
-    let mut total_weighting : f64 = 1.0 - (open_value + total_value);
-
-    //TODO Binding between 0 and 1 values. This does not seem like a great idea however
-    if total_weighting < 0.0 {
-        total_weighting = 0.0;
-        return total_weighting;
+    //TODO Potentially add 70/30 or 80/20 weighting for total issues as well
+    //TODO Binding between 0 and 1 values. Values for conditions may change
+    //* Yes, this is disgusting to look at. Couldn't be bothered to find a easier way lol. Plus easier to read/understand I guess
+    if total_weighting  <= 0.0025{
+        return 1.0;
     }
-    else if total_weighting > 1.0 {
-        total_weighting = 1.0;
-        return total_weighting;
+    else if total_weighting <= 0.005{
+        return 0.9;
+    } 
+    else if total_weighting <= 0.01{
+        return 0.8;
+    }
+    else if total_weighting <= 0.015{
+        return 0.7;
+    }
+    else if total_weighting <= 0.02{
+        return 0.6;
+    }
+    else if total_weighting <= 0.025{
+        return 0.5;
+    }
+    else if total_weighting <= 0.03{
+        return 0.4;
+    }
+    else if total_weighting <= 0.04{
+        return 0.3;
+    }
+    else if total_weighting <= 0.05{
+        return 0.2;
+    }
+    else if total_weighting <= 0.06{
+        return 0.1;
     }
     else{
-        return total_weighting;
+        return 0.0;
     }
+
 }
 
 
@@ -41,8 +59,7 @@ pub fn calculate_percentage(open: f64, total: f64, users: f64) -> f64{
 fn main() {
     let args : Vec<String> = env::args().collect();                         //Collects the argv values into a vector called args
     let open : f64 = args[1].parse().unwrap();                              //Converts the string values into a i32 value 
-    let closed : f64 = args[2].parse().unwrap();
-    let users : f64 = args[3].parse().unwrap();
-    let total_weighting = calculate_percentage(open, closed, users);        //Calls the calculate_percentage to find the correctiveness base value
+    let stars : f64 = args[2].parse().unwrap();
+    let total_weighting = calculate_percentage(open, stars);                //Calls the calculate_percentage to find the correctiveness base value
     println!("{total_weighting}")
 }
