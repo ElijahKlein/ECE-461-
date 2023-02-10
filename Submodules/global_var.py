@@ -2,9 +2,9 @@
 Name: Eric Chen 
     Date of Last Edit: 2/8/2023
     
-    Purpose: Holds all globl variables and funct5ions
+    Purpose: Holds all global variables and functions
 
-    Details: 
+    Details: Current vars are Github token and cloned repo location
 
 """
 
