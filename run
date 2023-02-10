@@ -5,16 +5,40 @@
 #TODO - need to add error handling
 #TODO - need to finish adding/change level 1 LOG_LEVEL text
 
+
 #installFunc - installs all required dependencies
 installFunc () {
-	if [[ $LOG_LEVEL -eq "2" ]]; then
+	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running install function" >> $LOG_FILE
 	fi
 	
-	#TODO - Add any dependencies necessary 
+	installedCount=0
+	#This installs the pyGitAPI to access the GraphQL API
+	#https://github.com/DillonB07/GitAPI
+	if [[ $LOG_LEVEL -eq 2 ]]; then
+		python -m pip install --upgrade pygitapi >> $LOG_FILE	
+		installedCount=$((installedCount+1))
+	else
+		dummyVar=''
+		python -m pip install --upgrade pygitapi >> dummyVar
+		installedCount=$((installedCount+1))
+	fi	
+	
+	#Installs the PyGitHub library to access the GitHub Rest API
+	#https://github.com/PyGithub/PyGithub
+	if [[ $LOG_LEVEL -eq 2 ]]; then
+		pip install PyGithub >> $LOG_FILE	
+		installedCount=$((installedCount+1))
+	else
+		dummyVar=''
+		pip install PyGithub >> dummyVar
+		installedCount=$((installedCount+1))
+	fi	
+	
+	echo "$installedCount dependencies installed..." 
 
-	if [[ $LOG_LEVEL -eq "2" || $LOG_LEVEL -eq "1" ]]; then
-		echo "All dependency installs successful" >> $LOG_FILE
+	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+		echo "$installedCount dependencies installed..." >> $LOG_FILE
 	fi
 	
 	return 0
@@ -22,14 +46,15 @@ installFunc () {
 
 #buildFunc - compiles all relevant code 
 buildFunc () {
-	if [[ $LOG_LEVEL -eq "2" ]]; then
+	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running build function" >> $LOG_FILE
 	fi
 	
 	rustc ErrorTesting/ErrorTest.rs  #This is the format for compiling rust code, we do not need to do this for python because it is executable
+	
 	#TODO - Add all other rust functions to be compiled
 
-	if [[ $LOG_LEVEL -eq "2" || $LOG_LEVEL -eq "1" ]]; then
+	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
 		echo "All builds completed successful" >> $LOG_FILE
 	fi
 	
@@ -39,13 +64,13 @@ buildFunc () {
 
 #testFunc - runs testing suite for all modules
 testFunc () {
-	if [[ $LOG_LEVEL -eq "2" ]]; then
+	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running test function suite" >> $LOG_FILE
 	fi
 	
 	./ErrorTest
 
-	if [[ $LOG_LEVEL -eq "2" || $LOG_LEVEL -eq "1" ]]; then
+	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
 		echo "All tests run successfully" >> $LOG_FILE
 	fi
 	
@@ -54,38 +79,46 @@ testFunc () {
 
 #netScoreFunc - runs main program to compute net score and all sub scores
 netScoreFunc () {
-	if [[ $LOG_LEVEL -eq "2" ]]; then
+	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running net score function" >> $LOG_FILE
 	fi
 	
 	#TODO - Add main file call
 	
-	if [[ $LOG_LEVEL -eq "2" || $LOG_LEVEL -eq "1" ]]; then
+	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
 		echo "Net score and metrics computed successfully" >> $LOG_FILE
 	fi
 
 	return 0
 }
 
-
-echo "Beginning of Log" >> $LOG_FILE
-
-status=0
-
-if [[ "$@" -eq "install" ]]; then
-	status=$(installFunc)
-
-elif [[ "$@" -eq "build" ]]; then
-	status=$(buildFunc)
-
-elif [[ "$@" -eq "test" ]]; then
-	status=$(testFunc)
-else
-	status=$(netScoreFunc)
+if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+	now=$(date)
+	echo "Beginning of Log: $now" >> $LOG_FILE
 fi
 
+status=0
+if [[ "$@" == "install" ]]; then
+	output=$(installFunc)
+	echo $output
+	status=$?
 
-if [[ status -eq 0 ]]; then
+elif [[ "$@" == "build" ]]; then
+	output=$(buildFunc)
+	#echo $output
+	status=$?
+
+elif [[ "$@" == "test" ]]; then
+	output=$(testFunc)
+	echo $output
+	status=$?
+else
+	output=$(netScoreFunc)
+	echo $output
+	status=$?
+fi
+
+if [[ status -eq 0 && ( $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ) ]]; then
 	echo "No errors, all tasks completed successfully" >> $LOG_FILE
 	echo "End of Log" >> $LOG_FILE
 	echo "" >> $LOG_FILE
