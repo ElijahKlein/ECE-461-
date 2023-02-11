@@ -10,10 +10,10 @@
 use std::env;
 
 //TODO This is a way to import Rust modules into other Rust files. License.py is excluded due to weird interactions due to Python
-#[path = "/NetScoreCalculation/MetricCalculation/Correctness.rs"] mod Correctness;
-#[path = "/NetScoreCalculation/MetricCalculation/RampUp.rs"] mod RampUp;
-#[path = "/NetScoreCalculation/MetricCalculation/BusFactor.rs"] mod BusFactor;
-#[path = "/NetScoreCalculation/MetricCalculation/Responsiveness.rs"] mod Responsiveness;
+#[path = "NetScoreCalculation/MetricCalculation/Correctness.rs"] mod Correctness;
+#[path = "NetScoreCalculation/MetricCalculation/RampUp.rs"] mod RampUp;
+#[path = "NetScoreCalculation/MetricCalculation/BusFactor.rs"] mod BusFactor;
+#[path = "NetScoreCalculation/MetricCalculation/Responsiveness.rs"] mod Responsiveness;
 
 
 //*Main file used for testing. Compile command rustc needs a main function as well, due to not being able to compile libraries
@@ -50,8 +50,8 @@ fn main() {
     let num_comments : f64 = args[4].parse().unwrap();
 
     let correctness_base : f64 = Correctness::calculate_correctness(open_issues, stars);
-    let readme_weight : f64 = RampUp::calculate_readme(readme_size);
+    let rampup_weight : f64 = RampUp::calculate_readme(readme_size);
 
     println!("Base Correctness Weighting is: {correctness_base}");
-    println!("README size weighting is: {readme_weight}");
+    println!("Base RampUp Weighting is: {rampup_weight}");
 }
