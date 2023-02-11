@@ -1,8 +1,17 @@
 #!/bin/bash
+#  Name: Elijah Klein
+#  Date of Last Edit: 2/11/2023
+#
+#  Purpose: Run file for the package managing CLI project
+#
+#  Details: Takes an input that is either 'build', 'install', 'test' or URL_FILE that illicits the following behavior
+#	build - compiles all necessary code in the system
+#	install - installs all necessary dependencies 
+#	test - runs test suite to verify functionality of system and overall code coverage 
+#	URL_FILE - runs net score and metric calculations for all GitHub or npm repositories listed in the URL_FILE
+
 
 #Notes:
-#I am assuming that we do not need to do input validity checking for purposes of URLs
-#TODO - need to add error handling
 #TODO - need to finish adding/change level 1 LOG_LEVEL text
 
 
@@ -12,14 +21,16 @@ installFunc () {
 		echo "Running install function" >> $LOG_FILE
 	fi
 	
-	installedCount=0
+	local installedCount=0 #Count of installed dependencies 
+	local dummyVar=''      #Dummy variable to prevent unnecessary output from being printed to stdout
+	
 	#This installs the pyGitAPI to access the GraphQL API
 	#https://github.com/DillonB07/GitAPI
 	if [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Installing pyGitAPI" >> $LOG_FILE
 		python -m pip install --upgrade pygitapi >> $LOG_FILE	
 		installedCount=$((installedCount+1))
 	else
-		dummyVar=''
 		python -m pip install --upgrade pygitapi >> dummyVar
 		installedCount=$((installedCount+1))
 	fi	
@@ -27,10 +38,10 @@ installFunc () {
 	#Installs the PyGitHub library to access the GitHub Rest API
 	#https://github.com/PyGithub/PyGithub
 	if [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Installing pyGitHub" >> $LOG_FILE
 		pip install PyGithub >> $LOG_FILE	
 		installedCount=$((installedCount+1))
 	else
-		dummyVar=''
 		pip install PyGithub >> dummyVar
 		installedCount=$((installedCount+1))
 	fi	
@@ -49,10 +60,79 @@ buildFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running build function" >> $LOG_FILE
 	fi
+
+	rustc -A dead_code ErrorTesting/ErrorTest.rs  
+	[ -s ErrorTest.exe ] 
+	if [[ $? -ne 0 ]]; then
+		echo "Failed Build: ErrorTest.rs"
+		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+			echo "Failed Build: ErrorTest.rs" >> $LOG_FILE
+		fi
+		return 1
+	elif [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Successful build: ErrorTest.rs" >> $LOG_FILE
+	fi
 	
-	rustc ErrorTesting/ErrorTest.rs  #This is the format for compiling rust code, we do not need to do this for python because it is executable
+	rustc -A dead_code NetScoreCalculation/net_score.rs  
+	[ -s net_score.exe ] 
+	if [[ $? -ne 0 ]]; then
+		echo "Failed Build: net_score.rs"
+		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+			echo "Failed Build: net_score.rs" >> $LOG_FILE
+		fi
+		return 1
+	elif [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Successful build: net_score.rs" >> $LOG_FILE
+	fi
 	
-	#TODO - Add all other rust functions to be compiled
+	rustc -A dead_code NetScoreCalculation/MetricCalculation/bus_factor.rs
+	[ -s bus_factor.exe ] 
+	if [[ $? -ne 0 ]]; then
+		echo "Failed Build: bus_factor.rs"
+		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+			echo "Failed Build: bus_factor.rs" >> $LOG_FILE
+		fi
+		return 1
+	elif [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Successful build: bus_factor.rs" >> $LOG_FILE
+	fi
+	
+	rustc -A dead_code NetScoreCalculation/MetricCalculation/correctness.rs
+	[ -s correctness.exe ] 
+	if [[ $? -ne 0 ]]; then
+		echo "Failed Build: correctness.rs"
+		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+			echo "Failed Build: correctness.rs" >> $LOG_FILE
+		fi
+		return 1
+	elif [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Successful build: correctness.rs" >> $LOG_FILE
+	fi
+	
+	rustc -A dead_code NetScoreCalculation/MetricCalculation/ramp_up.rs
+	[ -s ramp_up.exe ] 
+	if [[ $? -ne 0 ]]; then
+		echo "Failed Build: ramp_up.rs"
+		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+			echo "Failed Build: ramp_up.rs" >> $LOG_FILE
+		fi
+		return 1
+	elif [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Successful build: ramp_up.rs" >> $LOG_FILE
+	fi
+	
+	rustc -A dead_code NetScoreCalculation/MetricCalculation/responsiveness.rs
+	[ -s responsiveness.exe ] 
+	if [[ $? -ne 0 ]]; then
+		echo "Failed Build: responsiveness.rs"
+		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+			echo "Failed Build: responsiveness.rs" >> $LOG_FILE
+		fi
+		return 1
+	elif [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Successful build: responsiveness.rs" >> $LOG_FILE
+	fi
+
 
 	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
 		echo "All builds completed successful" >> $LOG_FILE
@@ -82,6 +162,11 @@ netScoreFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running net score function" >> $LOG_FILE
 	fi
+	echo "$1"
+	#URL_FILE=$1
+	#if [[ -f "$FILE" ]]; then
+	#    echo "$FILE exists."
+	#fi	
 	
 	#TODO - Add main file call
 	
@@ -92,34 +177,47 @@ netScoreFunc () {
 	return 0
 }
 
+
 if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
 	now=$(date)
 	echo "Beginning of Log: $now" >> $LOG_FILE
 fi
 
+
 status=0
-if [[ "$@" == "install" ]]; then
+if [[ "$1" == "install" ]]; then
 	output=$(installFunc)
 	echo $output
 	status=$?
 
-elif [[ "$@" == "build" ]]; then
+elif [[ "$1" == "build" ]]; then
 	output=$(buildFunc)
 	#echo $output
 	status=$?
 
-elif [[ "$@" == "test" ]]; then
+elif [[ "$1" == "test" ]]; then
 	output=$(testFunc)
 	echo $output
 	status=$?
-else
-	output=$(netScoreFunc)
+elif [[ -f "$1" ]]; then
+	output=$(netScoreFunc $1)
 	echo $output
 	status=$?
+else
+	status = 1
+	echo "Error, input is invalid"
 fi
 
-if [[ status -eq 0 && ( $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ) ]]; then
-	echo "No errors, all tasks completed successfully" >> $LOG_FILE
+
+if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
 	echo "End of Log" >> $LOG_FILE
 	echo "" >> $LOG_FILE
 fi
+
+#Return statement for success or failure
+if [[ "$status" -eq "0" ]]; then
+	exit 0
+else
+	exit 1
+fi
+
