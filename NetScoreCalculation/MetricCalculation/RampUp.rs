@@ -9,7 +9,7 @@
 use std::env;
 
 //calculate_readme will return a weighting for the ramp up time, based on the size of the readme
-pub fn calculate_readme(readme_size: f64) -> f64{
+pub fn calculate_rampup(readme_size: f64) -> f64{
     //Compare length of readme_file to base case value
     if readme_size <= 25.0 {
         return 0.0;
@@ -46,6 +46,9 @@ pub fn calculate_readme(readme_size: f64) -> f64{
     }
 }
 
+
+//?Old code to factor in the avg amount of comments per file.
+/*
 //comments_weight will return a weighting for the RampUp time, based on the number of comments
 pub fn calculate_comments(num_comments: f64) -> f64 {
     //Compares the average number of comments per file to base cases
@@ -90,7 +93,7 @@ pub fn calculate_rampup(readme_size: f64, num_comments: f64) -> f64{
 
     let base_weight = (0.5 * readme_weighting) + (0.5 * comments_weighting);
     return 1.0;
-}
+}*/
 
 fn main() {
     let args : Vec<String> = env::args().collect();                         //Collects the argv values into a vector called args
