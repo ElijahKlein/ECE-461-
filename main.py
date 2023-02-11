@@ -7,10 +7,12 @@
 """
 
 import sys
+import subprocess                                                               #Used for calling executables (Compiled Rust files) with arguements
+import os
+
 from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
 from Submodules.issues import getIssuesByType
-import Submodules.pull_requests
 import Submodules.readme as rm
 import Submodules.issues as issues
 import Submodules.pull_requests as pulls
@@ -19,6 +21,8 @@ url = sys.argv[1]                                                               
 repo = clone_repo(url)                                                          #Clones the repository from the given URL, and a GitPython Repo object is stored in repo
 license_score = calculateLicenseScore(repo)                                     #license_score is determined by the evaluate_readme function in Licensing.py
 print(f'License scoring: {license_score}')
+readmeLength = rm.checkRMLength(repo)                                           #Example usage of the checkRMLength function in readme.py, which returns the lines of the README
+print(f'Number of lines in the README: {readmeLength}')
 
 numIssues = issues.getIssuesByType(url, 'open')                                 #Example usage of the getIssuesByTypes function, which obtains the number of open issues
 print(f'Number of open issues: {numIssues}')
@@ -30,6 +34,6 @@ print(f'The most recent pull request was: {recentPull} time ago')
 #pullDates = pulls.getAllPullDates(url, 'closed')                               #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
 #print(pullDates)
 
-numLines = rm.checkRMLength(repo) #DEBUG test RM length, it works
-print("RM lines:", numLines)
-
+executable = os.path.dirname(__file__) + "/NetScore.exe "
+args = f"{numIssues} {numDownloads} {readmeLength} 100"                         #Arguements for NetScore file. Add more as needed
+subprocess.run(executable + args, cwd=None, shell=False)                        #Starting of Subprocess
