@@ -44,8 +44,8 @@ installFunc () {
 	else
 		pip install PyGithub >> dummyVar
 		installedCount=$((installedCount+1))
-	fi	
-	
+	fi
+
 	echo "$installedCount dependencies installed..." 
 
 	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
@@ -61,6 +61,7 @@ buildFunc () {
 		echo "Running build function" >> $LOG_FILE
 	fi
 
+	#Compiling structure of all relevant files including error checking and logging
 	rustc -A dead_code ErrorTesting/ErrorTest.rs  
 	[ -s ErrorTest.exe ] 
 	if [[ $? -ne 0 ]]; then
@@ -132,12 +133,11 @@ buildFunc () {
 	elif [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Successful build: responsiveness.rs" >> $LOG_FILE
 	fi
-
+	
 
 	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
 		echo "All builds completed successful" >> $LOG_FILE
 	fi
-	
 
 	return 0
 }
@@ -147,11 +147,20 @@ testFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running test function suite" >> $LOG_FILE
 	fi
-	
-	./ErrorTest
+	local status=''
 
-	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
-		echo "All tests run successfully" >> $LOG_FILE
+	status=$(./ErrorTest)
+	#status=$?
+	#status=./ErrorTest
+	if [[ $status -ne 0 ]]; then
+		if [[ $LOG_LEVEL -eq 2 ]]; then
+			echo "Testing suite failed" >> $LOG_FILE
+		fi
+		return 1
+	else	
+		if [[ $LOG_LEVEL -eq 2 ]]; then
+			echo "Testing suite successful" >> $LOG_FILE
+		fi
 	fi
 	
 	return 0
@@ -162,16 +171,22 @@ netScoreFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running net score function" >> $LOG_FILE
 	fi
-	echo "$1"
-	#URL_FILE=$1
-	#if [[ -f "$FILE" ]]; then
-	#    echo "$FILE exists."
-	#fi	
 	
-	#TODO - Add main file call
+	status=0
+	URL_FILE=$1
 	
-	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
-		echo "Net score and metrics computed successfully" >> $LOG_FILE
+	if [[ -f "$URL_FILE" ]]; then
+		status= python main.py $URL_FILE
+	else 
+		echo "Error: $URL_FILE does not exist" 
+		return 1
+	fi	
+	
+	if [[ "$status" -ne 0 && $LOG_LEVEL -eq 2 ]]; then
+		echo "Net Score Calculation Failed" >> $LOG_FILE
+		return 1
+	elif [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Net Score Calculation successful" >> $LOG_FILE
 	fi
 
 	return 0
@@ -197,7 +212,7 @@ elif [[ "$1" == "build" ]]; then
 
 elif [[ "$1" == "test" ]]; then
 	output=$(testFunc)
-	echo $output
+	#echo $output
 	status=$?
 elif [[ -f "$1" ]]; then
 	output=$(netScoreFunc $1)
