@@ -100,6 +100,6 @@ fn main() {
     let readme_size : f64 = args[1].parse().unwrap();                       //Converts the string values into a f64 value 
     let num_comments : f64 = args[2].parse().unwrap();
 
-    let readme_weight = calculate_readme(readme_size);
+    let readme_weight = calculate_rampup(readme_size);
     println!("README size weighting: {readme_weight}");
 }

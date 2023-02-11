@@ -53,5 +53,5 @@ fn main() {
     let rampup_base : f64 = RampUp::calculate_rampup(readme_size);
 
     println!("Base Correctness Weighting is: {correctness_base}");
-    println!("Base RampUp Weighting is: {rampup_weight}");
+    println!("Base RampUp Weighting is: {rampup_base}");
 }
