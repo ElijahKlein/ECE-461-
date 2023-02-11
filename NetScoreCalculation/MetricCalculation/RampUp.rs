@@ -84,11 +84,12 @@ pub fn calculate_comments(num_comments: f64) -> f64 {
     }
 }
 
-pub fn calculate_rampup (readme_size: f64, num_comments: f64) -> f64 {
-    readme_weighting = calculate_readme(readme_size);
-    comments_weighting = calculate_comments(num_comments);
+pub fn calculate_rampup(readme_size: f64, num_comments: f64) -> f64{
+    let readme_weighting = calculate_readme(readme_size);
+    let comments_weighting = calculate_comments(num_comments);
 
-    base_weight = (0.5 * readme_weighting) + (0.5 * comments_weighting);
+    let base_weight = (0.5 * readme_weighting) + (0.5 * comments_weighting);
+    return 1.0;
 }
 
 fn main() {
