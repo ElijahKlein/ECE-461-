@@ -85,7 +85,7 @@ pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
 
 pub fn calculate_size(repo_size: f64, num_contributors: f64) -> f64 {
     //Get how many files per contributor
-    let mut unweighted : f64 = repo_size / num_contributors;
+    let unweighted : f64 = repo_size / num_contributors;
     
     if unweighted <= 0.5 {                   //0.5 files per cont
         return 1.0;
