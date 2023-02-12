@@ -87,34 +87,34 @@ pub fn calculate_size(repo_size: f64, num_contributors: f64) -> f64 {
     //Get how many files per contributor
     let mut unweighted : f64 = repo_size / num_contributors;
     
-    if unweighted <= 20.0 {                    //20 files per cont
+    if unweighted <= 0.5 {                   //0.5 files per cont
         return 1.0;
     }
-    else if unweighted <= 40.0 {              //40 files per cont
+    else if unweighted <= 1.0 {              //1 file per cont
         return 0.9;
     }
-    else if unweighted <= 60.0 {              //60 files per cont
+    else if unweighted <= 2.5 {              //2.5 files per cont
         return 0.8;
     }
-    else if unweighted <= 80.0 {              //etc...
+    else if unweighted <= 5.0 {              //etc...
         return 0.7;
     }
-    else if unweighted <= 100.0 {
+    else if unweighted <= 10.0 {
         return 0.6;
     }
-    else if unweighted <= 120.0 {
+    else if unweighted <= 15.0 {
         return 0.5;
     }
-    else if unweighted <= 140.0 {
+    else if unweighted <= 20.0 {
         return 0.4;
     }
-    else if unweighted <= 160.0 {
+    else if unweighted <= 30.0 {
         return 0.3;
     }
-    else if unweighted <= 180.0 {
+    else if unweighted <= 40.0 {
         return 0.2;
     }
-    else if unweighted <= 200.0 {
+    else if unweighted <= 50.0 {
         return 0.1;
     }
     else {

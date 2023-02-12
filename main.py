@@ -17,6 +17,7 @@ import Submodules.issues as issues
 import Submodules.pull_requests as pulls
 from Submodules.npm_handler import npm2git
 import Submodules.file_information as files
+import Submodules.contributors as contributors
 
 url_in = sys.argv[1] 
    
@@ -29,7 +30,7 @@ license_score = calculateLicenseScore(repo)                                     
 
 readmeLength = rm.checkRMLength(repo)                                           #Example usage of the checkRMLength function in readme.py, which returns the lines of the README
 print(f'Number of lines in the README: {readmeLength}')
-repoSize = files.getDirectorySize(url)                                          #Example usage of the getDirectorySize function, which returns the size of the directory
+repoSize = contributors.getNumFiles(url)                                        #Example usage of the getDirectorySize function, which returns the size of the directory
 print(f"Size of the directory: {repoSize}")
 
 numIssues = issues.getIssuesByType(url, 'open')                                 #Example usage of the getIssuesByTypes function, which obtains the number of open issues
@@ -42,13 +43,18 @@ print(f'The most recent pull request was: {recentPull} days ago')
 pullTotal = pulls.getAllPulls(url, 'closed')                                    #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
 print(f'The total number of pull requests are: {pullTotal}')
 
+numContributors = contributors.getNumContributors(url)
+print(f'The number of contributors is: {numContributors}')
+
 creationDate = pulls.getCreationDate(url)
 print(f'The creation date of the repository was: {creationDate}')
 
 pullFrequency = creationDate / pullTotal
 print(f'The frequency of pull requests is: {pullFrequency}')
 
+print(f"The files/contributor ratio is: {repoSize/numContributors}")
+
 executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
 #Arguements for NetScore file. Add more as needed
-args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} 298"                         
+args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} {numContributors}"                         
 subprocess.run(executable + args, cwd=None, shell=False)
