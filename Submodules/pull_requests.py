@@ -13,7 +13,7 @@ import sys
 import Submodules.global_var as gv
 from datetime import datetime                                                       #Used for time calculations
 
-#getMostRecentPull will return the date of the most recent pull request of the provided URL, sorted by type (closed, open, all)
+#getMostRecentPull will return the days since the most recent pull request of the provided URL, sorted by type (closed, open, all)
 def getMostRecentPull(url, type):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])                    #Obtain the appropriate repo from REST API
@@ -22,28 +22,24 @@ def getMostRecentPull(url, type):
         mostRecent = issuesAndPull[index]
         while not mostRecent.pull_request and index < issuesAndPull.totalCount:     #Iterates through all Issues and Pull Request to find the most recent Pull Request of the specified type
             index += 1
-        return datetime.now() - mostRecent.closed_at                                #Returns a datetime object, which details the most recent Pull Request
+        return (datetime.now() - mostRecent.closed_at).days                         #Returns a datetime object, which details the most recent Pull Request
     except:
         print("Error in getMostRecentPull")                                         #Except case for potential invalid github links
 
-#getAllPullDates will return a list of datetimes of all Pull Requests of the provided type
-def getAllPullDates(url, type):
+#getAllPulls will obtain the number of pull requests of  the specific type
+def getAllPulls(url, type):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])                    #Obtain the appropriate repo from REST API
-        issuesAndPull = repo.get_issues(state=type)                                 #Grabs the issues depending on provided type
-        datesList = []
-        for pulls in issuesAndPull:                                                 
-            if(pulls.pull_request):                                                 #If there is a pull request, add the closed date to the datesList
-                datesList.append(pulls.closed_at)
+        pulls = repo.get_pulls(state=type)                                          #Grabs the list of pull requests
+        return pulls.totalCount
     except:
         print("Error in getAllPullDates")
-    return datesList
 
 #getCreationDate will return the datetime of when the repository was created
 def getCreationDate(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])
-        return repo.created_at
+        return (datetime.now() - repo.created_at).days
     except:
         print("Error in getCreationDate")
         

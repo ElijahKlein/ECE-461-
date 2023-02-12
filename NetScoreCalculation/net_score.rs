@@ -24,6 +24,7 @@ fn main() {
     let open : f64 = args[2].parse().unwrap();                                          //Converst the string values into a f64 value for all args 
     let users : f64 = args[3].parse().unwrap();
     let readme_length : f64 = args[4].parse().unwrap();
+    let last_pull : f64 = args[5].parse().unwrap();
 
     let correct_base = correctness::calculate_correctness(open, users);                 //Calls the calculate_percentage to find the correctiveness base value
     let ramp_base = ramp_up::calculate_rampup(readme_length);

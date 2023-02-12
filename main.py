@@ -38,14 +38,17 @@ numDownloads = issues.getUsers(url)                                             
 print(f'Estimated number of users: {numDownloads}')
 
 recentPull = pulls.getMostRecentPull(url, 'closed')                             #Example usage of the getMostRecentPull function, which obtaines the most recent closed pull request
-print(f'The most recent pull request was: {recentPull} time ago')
-#pullDates = pulls.getAllPullDates(url, 'closed')                               #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
-#print(pullDates)
+print(f'The most recent pull request was: {recentPull} days ago')
+pullTotal = pulls.getAllPulls(url, 'closed')                                    #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
+print(f'The total number of pull requests are: {pullTotal}')
 
 creationDate = pulls.getCreationDate(url)
 print(f'The creation date of the repository was: {creationDate}')
 
+pullFrequency = pullTotal / creationDate
+print(f'The frequency of pull requests is: {pullFrequency}')
+
 executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
 #Arguements for NetScore file. Add more as needed
-args = f"{license_score} {numIssues} {numDownloads} {readmeLength} 100"                         
+args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} "                         
 subprocess.run(executable + args, cwd=None, shell=False)
