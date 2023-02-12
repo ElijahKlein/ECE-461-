@@ -9,7 +9,7 @@ Input: url = The url for the Github repo
 
 #import Submodules.global_var as gv
 from github import Github
-import Submodules.globar_var as gv
+import Submodules.global_var as gv
 def getNumContributors(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
