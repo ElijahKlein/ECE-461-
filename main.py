@@ -20,14 +20,13 @@ import Submodules.file_information as files
 
 url_in = sys.argv[1] 
    
-if"npmjs" in url_in:           #Converts npm to github if necessary 
+if "npmjs.com/" in url_in:                                                      #Converts npm to github if necessary 
     url = npm2git(url_in)  
 else: 
-    url = url_in  
-                                                           #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
+    url = url_in                                                                #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
 repo = clone_repo(url)                                                          #Clones the repository from the given URL, and a GitPython Repo object is stored in repo
 license_score = calculateLicenseScore(repo)                                     #license_score is determined by the evaluate_readme function in Licensing.py
-print(f'License scoring: {license_score}')
+
 readmeLength = rm.checkRMLength(repo)                                           #Example usage of the checkRMLength function in readme.py, which returns the lines of the README
 print(f'Number of lines in the README: {readmeLength}')
 repoSize = files.getDirectorySize(url)                                          #Example usage of the getDirectorySize function, which returns the size of the directory
@@ -43,6 +42,10 @@ print(f'The most recent pull request was: {recentPull} time ago')
 #pullDates = pulls.getAllPullDates(url, 'closed')                               #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
 #print(pullDates)
 
+creationDate = pulls.getCreationDate(url)
+print(f'The creation date of the repository was: {creationDate}')
+
 executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
-args = f"{numIssues} {numDownloads} {readmeLength} 100"                         #Arguements for NetScore file. Add more as needed
-subprocess.run(executable + args, cwd=None, shell=False)                        #Starting of Subprocess
+#Arguements for NetScore file. Add more as needed
+args = f"{license_score} {numIssues} {numDownloads} {readmeLength} 100"                         
+subprocess.run(executable + args, cwd=None, shell=False)
