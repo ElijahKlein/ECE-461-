@@ -45,10 +45,10 @@ print(f'The total number of pull requests are: {pullTotal}')
 creationDate = pulls.getCreationDate(url)
 print(f'The creation date of the repository was: {creationDate}')
 
-pullFrequency = pullTotal / creationDate
+pullFrequency = creationDate / pullTotal
 print(f'The frequency of pull requests is: {pullFrequency}')
 
 executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
 #Arguements for NetScore file. Add more as needed
-args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} "                         
+args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency}"                         
 subprocess.run(executable + args, cwd=None, shell=False)
