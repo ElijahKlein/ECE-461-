@@ -11,10 +11,6 @@
 #	URL_FILE - runs net score and metric calculations for all GitHub or npm repositories listed in the URL_FILE
 
 
-#Notes:
-#TODO - need to finish adding/change level 1 LOG_LEVEL text
-
-
 #installFunc - installs all required dependencies
 installFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
@@ -29,11 +25,9 @@ installFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Installing GitPython" >> $LOG_FILE
 		pip install GitPython >> $LOG_FILE
-		#python -m pip install --upgrade pygitapi >> $LOG_FILE	
 		installedCount=$((installedCount+1))
 	else
 		pip install GitPython >> dummyVar
-		#python -m pip install --upgrade pygitapi >> dummyVar
 		installedCount=$((installedCount+1))
 	fi	
 	
@@ -237,4 +231,3 @@ if [[ "$status" -eq "0" ]]; then
 else
 	exit 1
 fi
-
