@@ -24,14 +24,16 @@ installFunc () {
 	local installedCount=0 #Count of installed dependencies 
 	local dummyVar=''      #Dummy variable to prevent unnecessary output from being printed to stdout
 	
-	#This installs the pyGitAPI to access the GraphQL API
-	#https://github.com/DillonB07/GitAPI
+	#This installs GitPython to access the GraphQL API
+	#https://gitpython.readthedocs.io/en/stable/intro.html#installing-gitpython
 	if [[ $LOG_LEVEL -eq 2 ]]; then
-		echo "Installing pyGitAPI" >> $LOG_FILE
-		python -m pip install --upgrade pygitapi >> $LOG_FILE	
+		echo "Installing GitPython" >> $LOG_FILE
+		pip install GitPython >> $LOG_FILE
+		#python -m pip install --upgrade pygitapi >> $LOG_FILE	
 		installedCount=$((installedCount+1))
 	else
-		python -m pip install --upgrade pygitapi >> dummyVar
+		pip install GitPython >> dummyVar
+		#python -m pip install --upgrade pygitapi >> dummyVar
 		installedCount=$((installedCount+1))
 	fi	
 	
