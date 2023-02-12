@@ -48,7 +48,39 @@ pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
 
     //Then calculates the pull frequency scoring
     let mut frequency : f64 = 0.0;
-    return 0.0;
+
+    if pull_frequency <= 7.0 {
+        frequency = 1.0;
+    }
+    else if pull_frequency <= 14.0 {
+        frequency = 0.9;
+    }
+    else if pull_frequency <= 21.0 {
+        frequency = 0.8;
+    }
+    else if pull_frequency <= 30.0{
+        frequency = 0.7;
+    }
+    else if pull_frequency <= 60.0 {
+        frequency = 0.6;
+    }
+    else if pull_frequency <= 90.0 {
+        frequency = 0.5;
+    }
+    else if pull_frequency <= 120.0{
+        frequency = 0.4;
+    }
+    else if pull_frequency <= 150.0{
+        frequency = 0.2;
+    }
+    else if pull_frequency <= 180.0 {
+        frequency = 0.1;
+    }
+    else {
+        frequency = 0.0;
+    }
+
+    return (0.5 * recency) + (0.5 * frequency);
 }
 
 

@@ -25,11 +25,14 @@ fn main() {
     let users : f64 = args[3].parse().unwrap();
     let readme_length : f64 = args[4].parse().unwrap();
     let last_pull : f64 = args[5].parse().unwrap();
+    let pull_frequency : f64 = args[6].parse().unwrap();
 
     let correct_base = correctness::calculate_correctness(open, users);                 //Calls the calculate_percentage to find the correctiveness base value
     let ramp_base = ramp_up::calculate_rampup(readme_length);
+    let response_base = responsiveness::calculate_pulls(last_pull, pull_frequency);     //TODO Make this not only based on pull requests
 
     println!("Base Correctness Weighting is: {correct_base}");
     println!("Base RampUp Weighting is: {ramp_base}");
     println!("Base License Weighting is: {license_base}");
+    println!("Base Responsiveness is: {response_base}");
 }
