@@ -7,12 +7,11 @@ Description: Defines functionality to return contributor and file information ab
 Input: url = The url for the Github repo
 """
 
-#import Submodules.global_var as gv
 from github import Github
 import Submodules.global_var as gv
 def getNumContributors(url):
     try:
-        repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])
         numContributors = repo.get_contributors(anon="true")
         return numContributors.totalCount
     except:

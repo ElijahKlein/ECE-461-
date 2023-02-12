@@ -1,5 +1,5 @@
 /*  Name:Matthew Nale
- *  Date of Last Edit: 2/11/2023
+ *  Date of Last Edit: 2/12/2023
  *  
  *  Purpose: Calculate Responsiveness Metric of a given Github Repository
  *

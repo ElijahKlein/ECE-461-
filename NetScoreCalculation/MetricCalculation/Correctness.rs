@@ -14,8 +14,6 @@ pub fn calculate_correctness(open: f64, stars: f64) -> f64{
     //Grabs the ratio of open/total issues to users
     let total_weighting : f64 = open / stars;
 
-    //TODO Potentially add 70/30 or 80/20 weighting for total issues as well
-    //TODO Binding between 0 and 1 values. Values for conditions may change
     //* Yes, this is disgusting to look at. Couldn't be bothered to find a easier way lol. Plus easier to read/understand I guess
     if total_weighting  <= 0.0025{
         return 1.0;

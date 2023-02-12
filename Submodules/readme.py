@@ -1,6 +1,6 @@
 """ 
 Name: Matthew Nale
-    Date of Last Edit: 2/5/2023
+    Date of Last Edit: 2/12/2023
     
     Purpose: Performs all README operations, which can be called from any other function
 
@@ -30,7 +30,7 @@ def checkLicensing(repo):
                         print("Did not find information in LICENSE")
             f.close()
         except:                                                                 #If the clone_from fails, the scoring automatically is a 0, as there is not README to check for compatability
-            print(f"Did not find README with extension: {ext}")
+            pass
     print("Error in checkLicensing")
     return -1;
 
@@ -41,5 +41,4 @@ def checkRMLength(repo):
             numLines = sum(1 for line in open(targetFile, 'r'))
             return numLines
         except:
-            print(f"Did not find README with extension: {ext}")                  #If cannot open README (doesn't exist), numLines stays 0, which will cause a weight of zero
-    
+            pass

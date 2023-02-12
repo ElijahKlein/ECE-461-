@@ -1,6 +1,6 @@
 """ 
 Name: Matthew Nale
-    Date of Last Edit: 2/8/2023
+    Date of Last Edit: 2/12/2023
     
     Purpose: Performs all operations related to pull requests, which can be called from any other function
 
@@ -17,12 +17,11 @@ from datetime import datetime                                                   
 def getMostRecentPull(url, type):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])                    #Obtain the appropriate repo from REST API
-        issuesAndPull = repo.get_issues(state=type)                                 #Get the issues and pull requests depending on the provided state
-        index = 0
-        mostRecent = issuesAndPull[index]
-        while not mostRecent.pull_request and index < issuesAndPull.totalCount:     #Iterates through all Issues and Pull Request to find the most recent Pull Request of the specified type
-            index += 1
-        return (datetime.now() - mostRecent.closed_at).days                         #Returns a datetime object, which details the most recent Pull Request
+        try:
+            pulls = repo.get_pulls(state=type, sort="updated", direction="asc")     #Get the issues and pull requests depending on the provided state
+            return (datetime.now() - pulls[0].updated_at).days                      #Returns a datetime object, which details the most recent Pull Request
+        except:
+            return (datetime.now() - repo.created_at).days;                         #No pull request, so return the creation date of the repo
     except:
         print("Error in getMostRecentPull")                                         #Except case for potential invalid github links
 
@@ -30,8 +29,11 @@ def getMostRecentPull(url, type):
 def getAllPulls(url, type):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])                    #Obtain the appropriate repo from REST API
-        pulls = repo.get_pulls(state=type)                                          #Grabs the list of pull requests
-        return pulls.totalCount
+        try:
+            pulls = repo.get_pulls(state=type)                                      #Grabs the list of pull requests
+            return pulls.totalCount
+        except:
+            return (datetime.now() - repo.creted_at).days;                          #No pull request, so return the creation date of the repo
     except:
         print("Error in getAllPullDates")
 
