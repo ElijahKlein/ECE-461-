@@ -11,10 +11,6 @@
 #	URL_FILE - runs net score and metric calculations for all GitHub or npm repositories listed in the URL_FILE
 
 
-#Notes:
-#TODO - need to finish adding/change level 1 LOG_LEVEL text
-
-
 #installFunc - installs all required dependencies
 installFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
@@ -29,11 +25,9 @@ installFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Installing GitPython" >> $LOG_FILE
 		pip install GitPython >> $LOG_FILE
-		#python -m pip install --upgrade pygitapi >> $LOG_FILE	
 		installedCount=$((installedCount+1))
 	else
-		pip install GitPython >> dummyVar
-		#python -m pip install --upgrade pygitapi >> dummyVar
+		pip install GitPython >> /dev/null 
 		installedCount=$((installedCount+1))
 	fi	
 	
@@ -44,10 +38,21 @@ installFunc () {
 		pip install PyGithub >> $LOG_FILE	
 		installedCount=$((installedCount+1))
 	else
-		pip install PyGithub >> dummyVar
+		pip install PyGithub >> /dev/null 
 		installedCount=$((installedCount+1))
 	fi
 
+	#Installs the pytest library for testing purposes 
+	#https://docs.pytest.org/en/7.2.x/getting-started.html#get-started
+	if [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Installing pytest" >> $LOG_FILE
+		pip install -U pytest >> $LOG_FILE
+		installedCount=$((installedCount+1))
+	else
+		pip install -U pytest >> /dev/null 
+		installedCount=$((installedCount+1))
+	fi
+	
 	echo "$installedCount dependencies installed..." 
 
 	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
@@ -64,17 +69,17 @@ buildFunc () {
 	fi
 
 	#Compiling structure of all relevant files including error checking and logging
-	rustc -A dead_code ErrorTesting/ErrorTest.rs  
-	[ -s ErrorTest.exe ] 
-	if [[ $? -ne 0 ]]; then
-		echo "Failed Build: ErrorTest.rs"
-		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
-			echo "Failed Build: ErrorTest.rs" >> $LOG_FILE
-		fi
-		return 1
-	elif [[ $LOG_LEVEL -eq 2 ]]; then
-		echo "Successful build: ErrorTest.rs" >> $LOG_FILE
-	fi
+	#rustc -A dead_code ErrorTesting/ErrorTest.rs  
+	#[ -s ErrorTest.exe ] 
+	#if [[ $? -ne 0 ]]; then
+	#	echo "Failed Build: ErrorTest.rs"
+	#	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
+	#		echo "Failed Build: ErrorTest.rs" >> $LOG_FILE
+	#	fi
+	#	return 1
+	#elif [[ $LOG_LEVEL -eq 2 ]]; then
+	#	echo "Successful build: ErrorTest.rs" >> $LOG_FILE
+	#fi
 	
 	rustc -A dead_code NetScoreCalculation/net_score.rs  
 	[ -s net_score.exe ] 
@@ -149,11 +154,14 @@ testFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Running test function suite" >> $LOG_FILE
 	fi
-	local status=''
 
-	status=$(./ErrorTest)
-	#status=$?
-	#status=./ErrorTest
+	#local status=''
+	#status=$(./ErrorTest)
+	
+	status=0
+	status= python ErrorTest.py
+	
+
 	if [[ $status -ne 0 ]]; then
 		if [[ $LOG_LEVEL -eq 2 ]]; then
 			echo "Testing suite failed" >> $LOG_FILE
@@ -237,4 +245,3 @@ if [[ "$status" -eq "0" ]]; then
 else
 	exit 1
 fi
-
