@@ -20,7 +20,7 @@ import Submodules.file_information as files
 
 url_in = sys.argv[1] 
    
-if"npmjs" in url_in:                                                            #Converts npm to github if necessary 
+if "npmjs.com/" in url_in:                                                      #Converts npm to github if necessary 
     url = npm2git(url_in)  
 else: 
     url = url_in                                                                #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
