@@ -1,5 +1,5 @@
 /*  Name: Matthew Nale
- *  Date of Last Edit: 2/11/2023
+ *  Date of Last Edit: 2/12/2023
  *  
  *  Purpose: Calculate Ramp Up time Sub Metric of a given Github Repository
  *
@@ -97,7 +97,6 @@ pub fn calculate_rampup(readme_size: f64, num_comments: f64) -> f64{
 fn main() {
     let args : Vec<String> = env::args().collect();                         //Collects the argv values into a vector called args
     let readme_size : f64 = args[1].parse().unwrap();                       //Converts the string values into a f64 value 
-    //let num_comments : f64 = args[2].parse().unwrap();
 
     let readme_weight = calculate_rampup(readme_size);
     println!("README size weighting: {readme_weight}");
