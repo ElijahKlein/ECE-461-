@@ -5,7 +5,6 @@
  *
  *  Details: Using provided data, calculates the Ramp Up time in the range of [0,1], with 1 being the quickest ramp up time and 0 the slowest
 */
-
 use std::env;
 
 //calculate_readme will return a weighting for the ramp up time, based on the size of the readme
