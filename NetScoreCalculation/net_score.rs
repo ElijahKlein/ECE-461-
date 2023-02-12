@@ -36,5 +36,5 @@ fn main() {
     println!("Base Correctness Weighting is: {correct_base}");
     println!("Base RampUp Weighting is: {ramp_base}");
     println!("Base License Weighting is: {license_base}");
-    println!("Base Responsiveness is: {response_base}");
+    println!("Base Responsiveness Weighting is: {response_base}");
 }

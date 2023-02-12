@@ -50,5 +50,5 @@ print(f'The frequency of pull requests is: {pullFrequency}')
 
 executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
 #Arguements for NetScore file. Add more as needed
-args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} 50"                         
+args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} 298"                         
 subprocess.run(executable + args, cwd=None, shell=False)
