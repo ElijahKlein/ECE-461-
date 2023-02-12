@@ -5,7 +5,6 @@
  *
  *  Details: Using provided data, calculates the Ramp Up time in the range of [0,1], with 1 being the quickest ramp up time and 0 the slowest
 */
-
 use std::env;
 
 //calculate_readme will return a weighting for the ramp up time, based on the size of the readme
@@ -98,7 +97,7 @@ pub fn calculate_rampup(readme_size: f64, num_comments: f64) -> f64{
 fn main() {
     let args : Vec<String> = env::args().collect();                         //Collects the argv values into a vector called args
     let readme_size : f64 = args[1].parse().unwrap();                       //Converts the string values into a f64 value 
-    let num_comments : f64 = args[2].parse().unwrap();
+    //let num_comments : f64 = args[2].parse().unwrap();
 
     let readme_weight = calculate_rampup(readme_size);
     println!("README size weighting: {readme_weight}");

@@ -11,7 +11,7 @@ use std::env;
 //calculate_pulls with determine the submetric weighting for Pull Requests, with a 50/50 split on frequency and recency
 pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
     //First calculates the recency scoring
-    let mut recency: f64 = 0.0;
+    let recency: f64;
     if last_pull <= 7.0 {            //Less than 1 week
         recency = 1.0;
     }
@@ -47,7 +47,7 @@ pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
     }
 
     //Then calculates the pull frequency scoring
-    let mut frequency : f64 = 0.0;
+    let frequency : f64;
 
     if pull_frequency <= 7.0 {
         frequency = 1.0;
