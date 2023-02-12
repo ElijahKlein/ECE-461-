@@ -10,6 +10,8 @@ Input: url = The url for the Github repo
 #import Submodules.global_var as gv
 from github import Github
 import Submodules.globar_var as gv
+
+#Retrieves the number of contributors for a given repo
 def getNumContributors(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
@@ -17,7 +19,7 @@ def getNumContributors(url):
         return numContributors
     except:
         print("Error retrieving the number of contributors")
-        
+#Retrieves the number of files in a given repo        
 def getNumFiles(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
@@ -28,20 +30,13 @@ def getNumFiles(url):
             if(files_content.type == "dir"):
                 contents.extend(repo.get_contents(files_content.path))
             else:
-                if(files_content.name != ".gitignore"):                 #Within this if statement, add any names of files you wish to ignore when collecting the number of files
+                if(files_content.name != ".gitignore" or files_content.name != "readme.md"):                 #Within this if statement, add any names of files you wish to ignore when collecting the number of files
                     numFiles.append(files_content)
         return len(numFiles)
     except:
         print("Error retrieving the number of files")
 
-def getStatsContributors(url):
-    try:
-        repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
-        statsContributors = repo.get_stats_contributors()
-        return statsContributors
-    except:
-        print("Error retrieving the stats of contributors")
-
+#Retrieves the commits activity over the last year for a given repo
 def getStatsCommitActivity(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
@@ -50,6 +45,7 @@ def getStatsCommitActivity(url):
     except:
         print("Error retrieving the stats of commits")
 
+#Calculation function used to determine the commits per contributor per file for a given repo
 def calcCommitsPerContributorsPerFile(numCommits, numContributors, numFiles):
     try:
         commitsPerContributorsPerFile = (numCommits / numContributors) / numFiles
@@ -57,3 +53,13 @@ def calcCommitsPerContributorsPerFile(numCommits, numContributors, numFiles):
     except TypeError:
         print("Type Error: Check the variable type for inputs")
 
+#Unused functionality: Retrives commit counts from each individual contributor. 
+'''
+def getStatsContributors(url):
+    try:
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
+        statsContributors = repo.get_stats_contributors()
+        return statsContributors
+    except:
+        print("Error retrieving the stats of contributors")
+'''
