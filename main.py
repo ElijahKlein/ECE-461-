@@ -10,7 +10,7 @@ import sys
 import subprocess                                                               #Used for calling executables (Compiled Rust files) with arguements
 import os
 
-from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
+from NetScoreCalculation.MetricCalculation.licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
 import Submodules.readme as rm
 import Submodules.issues as issues
@@ -43,6 +43,6 @@ print(f'The most recent pull request was: {recentPull} time ago')
 #pullDates = pulls.getAllPullDates(url, 'closed')                               #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
 #print(pullDates)
 
-executable = os.path.dirname(__file__) + "/NetScore.exe "
+executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
 args = f"{numIssues} {numDownloads} {readmeLength} 100"                         #Arguements for NetScore file. Add more as needed
 subprocess.run(executable + args, cwd=None, shell=False)                        #Starting of Subprocess

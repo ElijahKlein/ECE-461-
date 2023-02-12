@@ -1,7 +1,62 @@
-/*  Name:
- *  Date of Last Edit:
+/*  Name:Matthew Nale
+ *  Date of Last Edit: 2/11/2023
  *  
  *  Purpose: Calculate Responsiveness Metric of a given Github Repository
  *
- *  Details: Language not set, revamp file in new language if needed
+ *  Details: Uses the Pull Request submetric and Size submetric to calculate the total Responsiveness weighting
 */
+
+use std::env;
+
+//calculate_pulls with determine the submetric weighting for Pull Requests, with a 50/50 split on frequency and recency
+pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
+    //First calculates the recency scoring
+    let mut recency: f64 = 0.0;
+    if last_pull <= 7.0 {            //Less than 1 week
+        recency = 1.0;
+    }
+    else if last_pull <= 14.0 {      //Less than 2 weeks
+        recency = 0.9;
+    }
+    else if last_pull <= 30.0 {      //Less than 1 month
+        recency = 0.8;
+    }
+    else if last_pull <= 60.0 {      //Less than 2 months
+        recency = 0.7; 
+    }
+    else if last_pull <= 90.0 {      //Less than 3 months
+        recency = 0.6;
+    }
+    else if last_pull <= 120.0 {     //Less than 4 months
+        recency = 0.5;
+    }
+    else if last_pull <= 180.0 {     //Less than 6 months
+        recency = 0.4;
+    }
+    else if last_pull <= 240.0 {     //Less than 8 months
+        recency = 0.3;
+    }
+    else if last_pull <= 300.0 {     //Less than 10 months
+        recency = 0.2;
+    }
+    else if last_pull <= 365.0 {     //Less than a year
+        recency = 0.1;
+    }
+    else {
+        recency = 0.0;               //Greater than a year
+    }
+
+    return recency;
+    //Then calculates the pull frequency scoring
+}
+
+
+
+fn main() {
+    let args : Vec<String> = env::args().collect();                         //Collects the argv values into a vector called args
+    let last_pull : f64 = args[1].parse().unwrap();                         //Converts the string values into a f64 value 
+    let frequency : f64 = args[2].parse().unwrap();
+
+    let readme_weight = calculate_pulls(last_pull, frequency);
+    println!("README size weighting: {readme_weight}");
+}

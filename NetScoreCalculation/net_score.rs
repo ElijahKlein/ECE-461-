@@ -21,8 +21,10 @@ use std::env;
 fn main() {
     let args : Vec<String> = env::args().collect();                                     //Collects the argv values into a vector called args
     let open : f64 = args[1].parse().unwrap();                                          //Converst the string values into a i32 value 
-    let closed : f64 = args[2].parse().unwrap();
-    let users : f64 = args[3].parse().unwrap();
-    let correct_base = correctness::calculate_percentage(open, closed, users);          //Calls the calculate_percentage to find the correctiveness base value
+    let users : f64 = args[2].parse().unwrap();
+    let readme_length : f64 = args[3].parse().unwrap();
+    let correct_base = correctness::calculate_correctness(open, users);                 //Calls the calculate_percentage to find the correctiveness base value
+    let ramp_base = ramp_up::calculate_rampup(readme_length);
     println!("Base Correctness Weighting is: {correct_base}");
+    println!("Base RampUp Weighting is: {ramp_base}");
 }
