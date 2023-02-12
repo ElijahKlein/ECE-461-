@@ -46,8 +46,9 @@ pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
         recency = 0.0;               //Greater than a year
     }
 
-    return recency;
     //Then calculates the pull frequency scoring
+    let mut frequency : f64 = 0.0;
+    return 0.0;
 }
 
 
@@ -57,6 +58,6 @@ fn main() {
     let last_pull : f64 = args[1].parse().unwrap();                         //Converts the string values into a f64 value 
     let frequency : f64 = args[2].parse().unwrap();
 
-    let readme_weight = calculate_pulls(last_pull, frequency);
-    println!("README size weighting: {readme_weight}");
+    let pull_weight = calculate_pulls(last_pull, frequency);
+    println!("README size weighting: {pull_weight}");
 }

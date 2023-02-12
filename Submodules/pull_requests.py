@@ -38,6 +38,14 @@ def getAllPullDates(url, type):
     except:
         print("Error in getAllPullDates")
     return datesList
+
+#getCreationDate will return the datetime of when the repository was created
+def getCreationDate(url):
+    try:
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])
+        return repo.created_at
+    except:
+        print("Error in getCreationDate")
         
 """This below can be used for testing. Comment when not being used, or delete when finishing project
 url = sys.argv[1]
