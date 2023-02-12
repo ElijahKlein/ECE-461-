@@ -16,8 +16,15 @@ from Submodules.issues import getIssuesByType
 import Submodules.readme as rm
 import Submodules.issues as issues
 import Submodules.pull_requests as pulls
+from Submodules.npm_handler import npm2git
 
-url = sys.argv[1]                                                               #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
+url_in = sys.argv[1] 
+   
+if"npmjs" in url_in:           #Converts npm to github if necessary 
+    url = npm2git(url_in)  
+else: 
+    url = url_in  
+                                                           #Obtains the URL link from argv[1]. Will later be modified to take a .txt file instead
 repo = clone_repo(url)                                                          #Clones the repository from the given URL, and a GitPython Repo object is stored in repo
 license_score = calculateLicenseScore(repo)                                     #license_score is determined by the evaluate_readme function in Licensing.py
 print(f'License scoring: {license_score}')
