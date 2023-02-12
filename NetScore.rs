@@ -50,8 +50,8 @@ fn main() {
     let num_comments : f64 = args[4].parse().unwrap();
 
     let correctness_base : f64 = Correctness::calculate_correctness(open_issues, stars);
-    let rampup_weight : f64 = RampUp::calculate_readme(readme_size);
+    let rampup_base : f64 = RampUp::calculate_rampup(readme_size);
 
     println!("Base Correctness Weighting is: {correctness_base}");
-    println!("Base RampUp Weighting is: {rampup_weight}");
+    println!("Base RampUp Weighting is: {rampup_base}");
 }

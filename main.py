@@ -12,11 +12,11 @@ import os
 
 from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
-from Submodules.issues import getIssuesByType
 import Submodules.readme as rm
 import Submodules.issues as issues
 import Submodules.pull_requests as pulls
 from Submodules.npm_handler import npm2git
+import Submodules.file_information as files
 
 url_in = sys.argv[1] 
    
@@ -30,6 +30,8 @@ license_score = calculateLicenseScore(repo)                                     
 print(f'License scoring: {license_score}')
 readmeLength = rm.checkRMLength(repo)                                           #Example usage of the checkRMLength function in readme.py, which returns the lines of the README
 print(f'Number of lines in the README: {readmeLength}')
+repoSize = files.getDirectorySize(url)                                          #Example usage of the getDirectorySize function, which returns the size of the directory
+print(f"Size of the directory: {repoSize}")
 
 numIssues = issues.getIssuesByType(url, 'open')                                 #Example usage of the getIssuesByTypes function, which obtains the number of open issues
 print(f'Number of open issues: {numIssues}')
