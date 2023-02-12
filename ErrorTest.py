@@ -14,6 +14,8 @@ from Submodules.repo_clone import clone_repo
 from Submodules.file_information import getDirectorySize
 from Submodules.npm_handler import npm2git 
 import Submodules.pull_requests as pulls
+import Submodules.readme as readme
+import Submodules.contributors as contrib
 
 from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
 import Submodules.issues as issues
@@ -26,9 +28,21 @@ repo = clone_repo(url)                                                          
 total = 0
 failCount = 0
 
+repo = clone_repo(url)
+
+total += 1	
+try:
+	assert(repo) != None
+except AssertionError as msg:
+	failCount += 1
+total += 1	
+try:
+	assert(npm2git("https://www.npmjs.com/package/express")) == "https://github.com/expressjs/express"
+except AssertionError as msg:
+	failCount += 1
 total += 1
 try:
-	assert(getDirectorySize(url)) == 5
+	assert(getDirectorySize(url)) == 5 #TODO - verify
 except AssertionError as msg:
 	failCount += 1
 total += 1	
@@ -53,15 +67,50 @@ except AssertionError as msg:
 	failCount += 1
 total += 1	
 try:
-	assert(npm2git("https://www.npmjs.com/package/express")) == "https://github.com/expressjs/express"
+	assert(pulls.getMostRecentPull(url, 'closed')) == (datetime.now() - datetime(2023, 2, 11, 20, 42)).days
 except AssertionError as msg:
 	failCount += 1
 total += 1	
 try:
-	assert(pulls.getMostRecentPull(url, 'closed')) == (datetime.now() - datetime(2023, 2, 11, 20, 42)).days
+	assert(pulls.getMostRecentPull(url, 'open')) == None #TODO - verify
 except AssertionError as msg:
 	failCount += 1
-
+total += 1	
+try:
+	assert(pulls.getAllPulls(url, 'closed')) == 2
+except AssertionError as msg:
+	failCount += 1
+total += 1	
+try:
+	assert(pulls.getAllPulls(url, 'open')) == 0
+except AssertionError as msg:
+	failCount += 1
+total += 1	
+try:
+	assert(pulls.getCreationDate(url)) == (datetime.now() - datetime(2023, 2, 11, 19, 4)).days
+except AssertionError as msg:
+	failCount += 1
+total += 1	
+try:
+	assert(readme.checkLicensing(repo)) == 1 #TODO - verify
+except AssertionError as msg:
+	failCount += 1
+total += 1	
+try:
+	assert(readme.checkRMLength(repo)) == 707
+except AssertionError as msg:
+	failCount += 1
+total += 1	
+try:
+	assert(contrib.getNumContributors(url)) == 2
+except AssertionError as msg:
+	failCount += 1
+total += 1	
+try:
+	assert(contrib.getNumFiles(url)) == 5 #TODO - verify
+except AssertionError as msg:
+	failCount += 1
+print(contrib.getStatsContributors(url))
 
 
 print(f'{total - failCount}/{total} test cases passed. Z% line coverage achieved.')
