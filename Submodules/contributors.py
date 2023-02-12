@@ -10,7 +10,7 @@ Input: url = The url for the Github repo
 #import Submodules.global_var as gv
 from github import Github
 import Submodules.globar_var as gv
-def getNumContributors(url, token):
+def getNumContributors(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
         numContributors = repo.get_contributors(anon="true")
@@ -18,7 +18,7 @@ def getNumContributors(url, token):
     except:
         print("Error retrieving the number of contributors")
         
-def getNumFiles(url, token):
+def getNumFiles(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
         contents = repo.get_contents("")
@@ -33,7 +33,7 @@ def getNumFiles(url, token):
     except:
         print("Error retrieving the number of files")
 
-def getStatsContributors(url, token):
+def getStatsContributors(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
         statsContributors = repo.get_stats_contributors()
@@ -41,7 +41,7 @@ def getStatsContributors(url, token):
     except:
         print("Error retrieving the stats of contributors")
 
-def getStatsCommitActivity(url, token):
+def getStatsCommitActivity(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
         statsCommitActivity = repo.get_stats_commit_activity()
