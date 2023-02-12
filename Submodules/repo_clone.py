@@ -3,11 +3,12 @@
     
     Purpose: Cloning the given repository from the provided URL. 
 
-    Details: When provided a valid URL, a local clone of the repository is made in the local 'temp' folder, and the Repo object is returned
+    Details: When provided a valid URL, a local clone of the repository is made in the local 'clone_dir' folder, and the Repo object is returned
     
 """
 
-import git
+import git #GitPython'
+
 import Submodules.global_var as gv
 import os.path as path
 
