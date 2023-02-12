@@ -44,14 +44,14 @@ installFunc () {
 
 	#Installs the pytest library for testing purposes 
 	#https://docs.pytest.org/en/7.2.x/getting-started.html#get-started
-	if [[ $LOG_LEVEL -eq 2 ]]; then
-		echo "Installing pytest" >> $LOG_FILE
-		pip install -U pytest >> $LOG_FILE
-		installedCount=$((installedCount+1))
-	else
-		pip install -U pytest >> /dev/null 
-		installedCount=$((installedCount+1))
-	fi
+	#if [[ $LOG_LEVEL -eq 2 ]]; then
+	#	echo "Installing pytest" >> $LOG_FILE
+	#	pip install -U pytest >> $LOG_FILE
+	#	installedCount=$((installedCount+1))
+	#else
+	#	pip install -U pytest >> /dev/null 
+	#	installedCount=$((installedCount+1))
+	#fi
 	
 	echo "$installedCount dependencies installed..." 
 
@@ -69,18 +69,6 @@ buildFunc () {
 	fi
 
 	#Compiling structure of all relevant files including error checking and logging
-	#rustc -A dead_code ErrorTesting/ErrorTest.rs  
-	#[ -s ErrorTest.exe ] 
-	#if [[ $? -ne 0 ]]; then
-	#	echo "Failed Build: ErrorTest.rs"
-	#	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
-	#		echo "Failed Build: ErrorTest.rs" >> $LOG_FILE
-	#	fi
-	#	return 1
-	#elif [[ $LOG_LEVEL -eq 2 ]]; then
-	#	echo "Successful build: ErrorTest.rs" >> $LOG_FILE
-	#fi
-	
 	rustc -A dead_code NetScoreCalculation/net_score.rs  
 	[ -s net_score.exe ] 
 	if [[ $? -ne 0 ]]; then

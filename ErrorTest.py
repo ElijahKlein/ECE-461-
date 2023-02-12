@@ -7,7 +7,6 @@
 """
 
 import sys
-#import pytest
 from datetime import datetime
 import Submodules.global_var as gv
 from Submodules.repo_clone import clone_repo
@@ -171,28 +170,6 @@ except AssertionError as msg:
 print(f'{total - failCount}/{total} test cases passed. Z% line coverage achieved.')
 
 
-"""
-
-total += 1	
-try:
-	assert( ) == 
-except AssertionError as msg:
-	failCount += 1
 
 
 
-license_score = calculateLicenseScore(repo)                                     #license_score is determined by the evaluate_readme function in Licensing.py
-print(f'License scoring: {license_score}')
-
-numIssues = issues.getIssuesByType(url, 'open')                                 #Example usage of the getIssuesByTypes function, which obtains the number of open issues
-print(f'Number of open issues: {numIssues}')
-numIssues = issues.getIssuesByType(url, 'closed')                                 #Example usage of the getIssuesByTypes function, which obtains the number of open issues
-print(f'Number of closed issues: {numIssues}')
-numDownloads = issues.getUsers(url)                                             #Example usage of the getUsers function, which obtains the number of downloads of the repo
-print(numDownloads)
-
-recentPull = pulls.getMostRecentPull(url, 'closed')                             #Example usage of the getMostRecentPull function, which obtaines the most recent closed pull request
-print(f'The most recent pull request was: {recentPull} time ago')
-#pullDates = pulls.getAllPullDates(url, 'closed')                               #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
-#print(pullDates)
-"""
