@@ -28,7 +28,8 @@ def getNumFiles(url):
             if(files_content.type == "dir"):
                 contents.extend(repo.get_contents(files_content.path))
             else:
-                numFiles.append(files_content)
+                if(files_content.name != ".gitignore"):                 #Within this if statement, add any names of files you wish to ignore when collecting the number of files
+                    numFiles.append(files_content)
         return len(numFiles)
     except:
         print("Error retrieving the number of files")
@@ -49,10 +50,10 @@ def getStatsCommitActivity(url):
     except:
         print("Error retrieving the stats of commits")
 
-def calcContributorsPerFile(numContributors, numFiles):
+def calcCommitsPerContributorsPerFile(numCommits, numContributors, numFiles):
     try:
-        contributorsPerFile = numContributors / numFiles
+        commitsPerContributorsPerFile = (numCommits / numContributors) / numFiles
+        return commitsPerContributorsPerFile
     except TypeError:
         print("Type Error: Check the variable type for inputs")
-    return contributorsPerFile
 
