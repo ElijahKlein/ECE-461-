@@ -11,7 +11,7 @@ use std::env;
 //calculate_pulls with determine the submetric weighting for Pull Requests, with a 50/50 split on frequency and recency
 pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
     //First calculates the recency scoring
-    let recency: f64 = 0.0;
+    let mut recency: f64 = 0.0;
     if last_pull <= 7.0 {            //Less than 1 week
         recency = 1.0;
     }
@@ -46,6 +46,7 @@ pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
         recency = 0.0;               //Greater than a year
     }
 
+    return recency;
     //Then calculates the pull frequency scoring
 }
 
@@ -53,9 +54,9 @@ pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
 
 fn main() {
     let args : Vec<String> = env::args().collect();                         //Collects the argv values into a vector called args
-    let readme_size : f64 = args[1].parse().unwrap();                       //Converts the string values into a f64 value 
-    let num_comments : f64 = args[2].parse().unwrap();
+    let last_pull : f64 = args[1].parse().unwrap();                         //Converts the string values into a f64 value 
+    let frequency : f64 = args[2].parse().unwrap();
 
-    let readme_weight = calculate_pulls(readme_size);
+    let readme_weight = calculate_pulls(last_pull, frequency);
     println!("README size weighting: {readme_weight}");
 }
