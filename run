@@ -117,7 +117,7 @@ buildFunc () {
 		echo "Successful build: correctness.rs" >> $LOG_FILE
 	fi
 	
-	rustc -A dead_code NetScoreCalculation/MetricCalculation/ramp_up.rs
+	rustc -A warnings -A dead_code NetScoreCalculation/MetricCalculation/ramp_up.rs
 	[ -s ramp_up.exe ] 
 	if [[ $? -ne 0 ]]; then
 		echo "Failed Build: ramp_up.rs"
@@ -129,16 +129,16 @@ buildFunc () {
 		echo "Successful build: ramp_up.rs" >> $LOG_FILE
 	fi
 	
-	rustc -A dead_code NetScoreCalculation/MetricCalculation/responsiveness.rs
-	[ -s responsiveness.exe ] 
+	rustc -A dead_code NetScoreCalculation/MetricCalculation/Responsiveness.rs
+	[ -s Responsiveness.exe ] 
 	if [[ $? -ne 0 ]]; then
-		echo "Failed Build: responsiveness.rs"
+		echo "Failed Build: Responsiveness.rs"
 		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
-			echo "Failed Build: responsiveness.rs" >> $LOG_FILE
+			echo "Failed Build: Responsiveness.rs" >> $LOG_FILE
 		fi
 		return 1
 	elif [[ $LOG_LEVEL -eq 2 ]]; then
-		echo "Successful build: responsiveness.rs" >> $LOG_FILE
+		echo "Successful build: Responsiveness.rs" >> $LOG_FILE
 	fi
 	
 
@@ -222,7 +222,7 @@ elif [[ "$1" == "build" ]]; then
 
 elif [[ "$1" == "test" ]]; then
 	output=$(testFunc)
-	#echo $output
+	echo $output
 	status=$?
 elif [[ -f "$1" ]]; then
 	output=$(netScoreFunc $1)
