@@ -48,4 +48,4 @@ print(f'The creation date of the repository was: {creationDate}')
 executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
 #Arguements for NetScore file. Add more as needed
 args = f"{license_score} {numIssues} {numDownloads} {readmeLength} 100"                         
-subprocess.run(executable + args, cwd=None, shell=False)                        #Starting of Subprocess
+subprocess.run(executable + args, cwd=None, shell=False)
