@@ -7,50 +7,48 @@ Description: Defines functionality to return contributor and file information ab
 Input: url = The url for the Github repo
 """
 
-#import Submodules.global_var as gv
-from github import Github
 import Submodules.globar_var as gv
-
 #Retrieves the number of contributors for a given repo
 def getNumContributors(url):
     try:
-        repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
-        numContributors = repo.get_contributors(anon="true")
-        return numContributors
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API
+        numContributors = repo.get_contributors(anon="true")        #Get the list of contributors using PyGithub
+        return numContributors.totalCount                           #Return the total count of contributors
     except:
-        print("Error retrieving the number of contributors")
-#Retrieves the number of files in a given repo        
-def getNumFiles(url):
+        print("Error retrieving the number of contributors")        #Error trap
+        
+#Retrieves the number of files in a given repo          
+def getNumFiles(url, token):
     try:
-        repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
-        contents = repo.get_contents("")
-        numFiles = []
-        while contents:
-            files_content = contents.pop(0)
-            if(files_content.type == "dir"):
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API 
+        contents = repo.get_contents("")                            #Get all files contained in the repo
+        numFiles = []                                               #List that will contain all file objects
+        #Parse through all file objects created by PyGithub
+        while contents:                             
+            files_content = contents.pop(0)                         #Pop out the top file
+            if(files_content.type == "dir"):                            #If the file is a directory, recursively get the subdirectory file objects
                 contents.extend(repo.get_contents(files_content.path))
             else:
-                if(files_content.name != ".gitignore" or files_content.name != "readme.md"):                 #Within this if statement, add any names of files you wish to ignore when collecting the number of files
-                    numFiles.append(files_content)
-        return len(numFiles)
+                numFiles.append(files_content)                      #Add the specific file object to the list
+        return len(numFiles)                                        #Return the length of the list
     except:
-        print("Error retrieving the number of files")
+        print("Error retrieving the number of files")               #Error trap
+
 
 #Retrieves the commits activity over the last year for a given repo
 def getStatsCommitActivity(url):
     try:
-        repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
-        statsCommitActivity = repo.get_stats_commit_activity()
-        return statsCommitActivity
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API 
+        statsCommitActivity = repo.get_stats_commit_activity()      #Get the repo's commit activity from the last year
+        return statsCommitActivity                                  #Return this activity
     except:
         print("Error retrieving the stats of commits")
-
 #Calculation function used to determine the commits per contributor per file for a given repo
 def calcCommitsPerContributorsPerFile(numCommits, numContributors, numFiles):
     try:
-        commitsPerContributorsPerFile = (numCommits / numContributors) / numFiles
+        commitsPerContributorsPerFile = (numCommits / numContributors) / numFiles   #Calculate the metric
         return commitsPerContributorsPerFile
-    except TypeError:
+    except TypeError:                                               #If there is a type error (all parameters should be type Int)
         print("Type Error: Check the variable type for inputs")
 
 #Unused functionality: Retrives commit counts from each individual contributor. 
