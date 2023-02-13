@@ -80,5 +80,7 @@ with open(os.path.normpath(file), 'r') as f:
 netScores = dict(sorted(netScores.items(), key=lambda x: x[1][0], reverse=True))
 
 #Prints the net score in JSON format
+formatString = ''
 for key in netScores:
-    print(f"{{\"URL\":\"{key}\", \"NET_SCORE\":{netScores[key][0]}, \"RAMP_UP_SCORE\":{netScores[key][2]}, \"CORRECTNESS_SCORE\":{netScores[key][1]}, \"BUS_FACTOR_SCORE\":{netScores[key][4]}, \"RESPONSIVENESS_SCORE\":{netScores[key][3]}, \"LICENSE_SCORE\":{netScores[key][5]}}}")
+    formatString += f"{{\"URL\":\"{key}\", \"NET_SCORE\":{netScores[key][0]}, \"RAMP_UP_SCORE\":{netScores[key][2]}, \"CORRECTNESS_SCORE\":{netScores[key][1]}, \"BUS_FACTOR_SCORE\":{netScores[key][4]}, \"RESPONSIVENESS_SCORE\":{netScores[key][3]}, \"LICENSE_SCORE\":{netScores[key][5]}}} \n"
+print(formatString)
