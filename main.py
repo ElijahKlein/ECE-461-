@@ -10,7 +10,7 @@ import sys
 import subprocess                                                               #Used for calling executables (Compiled Rust files) with arguements
 import os
 
-from NetScoreCalculation.MetricCalculation.licensing import calculateLicenseScore
+from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
 import Submodules.readme as rm
 import Submodules.issues as issues

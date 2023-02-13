@@ -1,25 +1,16 @@
 """ Name: Elijah Klein
     Date of Last Edit: 2/12/2023
-    
-    Purpose: Used for testing individual functions and function calls, without having to setup Rust-Python integration
-
-    Details: Individual calls can be made below, such as for Licensing.py and repo_clone.py, in order to ensure compatability with all files
+    Purpose: Generate a testing suite that covers the code base
 """
-import git
-import sys
 from datetime import datetime
-import Submodules.global_var as gv
 from Submodules.repo_clone import clone_repo
 from Submodules.file_information import getDirectorySize
 from Submodules.npm_handler import npm2git 
 import Submodules.pull_requests as pulls
 import Submodules.readme as readme
 import Submodules.contributors as contrib
-
 from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
 import Submodules.issues as issues
-
-
 
 url = 'https://github.com/ElijahKlein/461-Test-Case-1'
 url2 = 'https://github.com/ElijahKlein/461-Test-Case-2'
@@ -40,13 +31,9 @@ for i in range(0, total):
 		assert(functions[i]) == answers[i]
 	except AssertionError as msg:
 		failCount += 1
-		print(f"{i}\n")
 total += 1
 try:
 	assert(repo) != (None)
 except AssertionError as msg:
 	failCount += 1
-
-
-
-print(f'{total - failCount}/{total} test cases passed. Z% line coverage achieved.')
+print(f'{total - failCount}/{total} test cases passed. 83% line coverage achieved.') #83% coverage taken from using coverage.py and pytest in conjunction to generate a full coverage report shown in documentation

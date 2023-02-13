@@ -42,16 +42,27 @@ installFunc () {
 		installedCount=$((installedCount+1))
 	fi
 
+	#Installs the Coverage.py library to measure code coverage
+	#https://coverage.readthedocs.io/en/7.1.0/
+	if [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Installing coverage.py" >> $LOG_FILE
+		pip install coverage >> $LOG_FILE	
+		installedCount=$((installedCount+1))
+	else
+		pip install coverage >> /dev/null 
+		installedCount=$((installedCount+1))
+	fi
+
 	#Installs the pytest library for testing purposes 
 	#https://docs.pytest.org/en/7.2.x/getting-started.html#get-started
-	#if [[ $LOG_LEVEL -eq 2 ]]; then
-	#	echo "Installing pytest" >> $LOG_FILE
-	#	pip install -U pytest >> $LOG_FILE
-	#	installedCount=$((installedCount+1))
-	#else
-	#	pip install -U pytest >> /dev/null 
-	#	installedCount=$((installedCount+1))
-	#fi
+	if [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Installing pytest" >> $LOG_FILE
+		pip install -U pytest >> $LOG_FILE
+		installedCount=$((installedCount+1))
+	else
+		pip install -U pytest >> /dev/null 
+		installedCount=$((installedCount+1))
+	fi
 	
 	echo "$installedCount dependencies installed..." 
 
@@ -61,6 +72,7 @@ installFunc () {
 	
 	return 0
 }
+
 
 #buildFunc - compiles all relevant code 
 buildFunc () {
