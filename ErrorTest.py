@@ -1,4 +1,4 @@
-""" Name: Elijah Klein
+""" Name: Elijah Klein, Eric Chen 
     Date of Last Edit: 2/12/2023
     Purpose: Generate a testing suite that covers the code base
 """
