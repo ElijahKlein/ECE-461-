@@ -27,16 +27,16 @@ numFiles = contrib.getNumFiles(url)
 #answers = ["https://github.com/expressjs/express", '.json', 1, (datetime.now() - datetime(2023, 2, 12, 1, 42)).days, None, 2, 0, 0, 1, (datetime.now() - datetime(2023, 2, 12, 9, 14)).days, 1, 707, 2, 5, 9, 9, 0.4]
 
 functions = [npm2git("https://www.npmjs.com/package/express"), issues.getUsers(url), pulls.getMostRecentPull(url, 'closed'), pulls.getMostRecentPull(url, 'open'), pulls.getAllPulls(url, 'closed'), pulls.getAllPulls(url, 'open'), pulls.getAllPulls(url2, 'closed'), pulls.getAllPulls(url2, 'open'), pulls.getCreationDate(url), readme.checkLicensing(repo), readme.checkRMLength(repo), contrib.getNumContributors(url), contrib.getNumFiles(url), sumCount, sumCount]
-answers = ["https://github.com/expressjs/express", 1, (datetime.now() - datetime(2023, 2, 12, 1, 42)).days, None, 2, 0, 0, 1, (datetime.now() - datetime(2023, 2, 12, 9, 14)).days, 1, 707, 2, 5, 9, 9]
-print(f'len: {len(functions)}')
-print(f'len: {len(answers)}')
+answers = ["https://github.com/expressjs/express", 1, (datetime.now() - datetime(2023, 2, 12, 1, 42)).days, 0, 2, 0, 0, 1, (datetime.now() - datetime(2023, 2, 12, 9, 14)).days, 1, 707, 2, 5, 9, 9]
+#print(f'len: {len(functions)}')
+#print(f'len: {len(answers)}')
 total = len(functions)
 for i in range(0, total):
 	try:
 		assert(functions[i]) == answers[i]
 	except AssertionError as msg:
 		failCount += 1
-		print(total)
+		print(i)
 total += 1
 try:
 	assert(repo) != (None)
