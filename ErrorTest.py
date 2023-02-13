@@ -31,7 +31,7 @@ functions = [npm2git("https://www.npmjs.com/package/express"), issues.getUsers(u
 	pulls.getAllPulls(url2, 'closed'), pulls.getAllPulls(url2, 'open'), pulls.getCreationDate(url), readme.checkLicensing(repo), readme.checkRMLength(repo), contrib.getNumContributors(url), contrib.getNumFiles(url), sumCount, sumCount,
 	pulls.getAllPulls(url3, 'closed'), pulls.getAllPulls(url3, 'open'), pulls.getCreationDate(url3), contrib.getNumContributors(url3)]
 
-answers = ["https://github.com/expressjs/express", 1, (datetime.now() - datetime(2023, 2, 12, 1, 42)).days, None, 2, 0, 0, 1, (datetime.now() - datetime(2023, 2, 12, 9, 14)).days, 1, 707, 2, 5, 9, 9, 0, 0, 995, 4]
+answers = ["https://github.com/expressjs/express", 1, (datetime.now() - datetime(2023, 2, 12, 1, 42)).days, 0, 2, 0, 0, 1, (datetime.now() - datetime(2023, 2, 12, 9, 14)).days, 1, 707, 2, 5, 9, 9, 0, 0, (datetime.now() - datetime(2020, 5, 23)).days, 4]
 
 print(f'len: {len(functions)}')
 print(f'len: {len(answers)}')
