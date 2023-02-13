@@ -217,7 +217,7 @@ if [[ "$1" == "install" ]]; then
 
 elif [[ "$1" == "build" ]]; then
 	output=$(buildFunc)
-	#echo $output
+	#echo "$output"
 	status=$?
 
 elif [[ "$1" == "test" ]]; then
@@ -225,8 +225,8 @@ elif [[ "$1" == "test" ]]; then
 	echo $output
 	status=$?
 elif [[ -f "$1" ]]; then
-	output=$(netScoreFunc $1)
-	echo $output
+	netScoreFunc $1
+	#echo $output
 	status=$?
 else
 	status = 1

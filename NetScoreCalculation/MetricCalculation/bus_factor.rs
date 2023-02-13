@@ -16,7 +16,7 @@ pub fn calculate_busfactor(numcommits: f64, numcontributors: f64, numfiles: f64)
         return 1.0;
     }
     else {
-        return f64::trunc(busfactor * 100.0) / 100.0;
+        return f64::trunc(busfactor * 10.0) / 10.0;
     }   
 }
 
