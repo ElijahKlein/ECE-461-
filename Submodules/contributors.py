@@ -33,26 +33,7 @@ def getNumFiles(url, token):
         return len(numFiles)                                        #Return the length of the list
     except:
         print("Error retrieving the number of files")               #Error trap
-
-
-#Retrieves the commits activity over the last year for a given repo
-def getStatsCommitActivity(url):
-    try:
-        repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API 
-        statsCommitActivity = repo.get_stats_commit_activity()      #Get the repo's commit activity from the last year
-        return statsCommitActivity                                  #Return this activity
-    except:
-        print("Error retrieving the stats of commits")
-#Calculation function used to determine the commits per contributor per file for a given repo
-def calcCommitsPerContributorsPerFile(numCommits, numContributors, numFiles):
-    try:
-        commitsPerContributorsPerFile = (numCommits / numContributors) / numFiles   #Calculate the metric
-        return commitsPerContributorsPerFile
-    except TypeError:                                               #If there is a type error (all parameters should be type Int)
-        print("Type Error: Check the variable type for inputs")
-
-#Unused functionality: Retrives commit counts from each individual contributor. 
-'''
+#Retrives commit counts from each individual contributor. 
 def getStatsContributors(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
@@ -60,4 +41,16 @@ def getStatsContributors(url):
         return statsContributors
     except:
         print("Error retrieving the stats of contributors")
+
+#Unused functionality: 
+#Retrieves the commits activity over the last year for a given repo
 '''
+def getStatsCommitActivity(url):
+    try:
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API 
+        statsCommitActivity = repo.get_stats_commit_activity()      #Get the repo's commit activity from the last year
+        return statsCommitActivity                                  #Return this activity
+    except:
+        print("Error retrieving the stats of commits")
+'''
+
