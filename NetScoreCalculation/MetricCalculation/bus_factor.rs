@@ -10,7 +10,7 @@ use std::env;
 //calculate_busfactor will determine the Bus Factor weighting for the Net Score total
 pub fn calculate_busfactor(numcommits: f64, numcontributors: f64, numfiles: f64) -> f64{
 
-    let mut busfactor: f64 = 0.0;
+    let busfactor: f64;
     busfactor = (0.5) * ((numcontributors / numcommits) + (numcontributors / numfiles)); //Calculate the score as an average between two metrics
     if busfactor > 1.0 {
         return 1.0;

@@ -159,7 +159,7 @@ testFunc () {
 	#status=$(./ErrorTest)
 	
 	status=0
-	status= python ErrorTest.py
+	status= python3 ErrorTest.py
 	
 
 	if [[ $status -ne 0 ]]; then
@@ -186,7 +186,7 @@ netScoreFunc () {
 	URL_FILE=$1
 	
 	if [[ -f "$URL_FILE" ]]; then
-		status= python main.py $URL_FILE
+		status= python3 main.py $URL_FILE
 	else 
 		echo "Error: $URL_FILE does not exist" 
 		return 1

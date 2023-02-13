@@ -10,10 +10,10 @@
 use std::env;
 
 //TODO This is a way to import Rust modules into other Rust files. License.py is excluded due to weird interactions
-#[path = "MetricCalculation/correctness.rs"] mod correctness;
+#[path = "MetricCalculation/Correctness.rs"] mod correctness;
 #[path = "MetricCalculation/ramp_up.rs"] mod ramp_up;
 #[path = "MetricCalculation/bus_factor.rs"] mod bus_factor;
-#[path = "MetricCalculation/responsiveness.rs"] mod responsiveness;
+#[path = "MetricCalculation/Responsiveness.rs"] mod responsiveness;
 
 
 //Main file used for testing. Compile command rustc needs a main function as well, due to not being able to compile libraries
