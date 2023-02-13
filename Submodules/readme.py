@@ -37,4 +37,4 @@ def checkRMLength(repo):
         return numLines
     except:
         print("No possible README to analyze")                              #If cannot open README (doesn't exist), numLines stays 0, which will cause a weight of zero
-    
+        return 0
