@@ -10,7 +10,7 @@ use std::env;
 pub fn calculate_busfactor(numcommits: f64, numcontributors: f64, numfiles: f64) -> f64{
     
     let mut busfactor: f64 = 0.0;
-    busfactor = (0.5) * ((numcontributors / numcommits) + (numcontributors / numfiles))
+    busfactor = (0.5) * ((numcontributors / numcommits) + (numcontributors / numfiles)) //Calculate the score as an average between two metrics
     if busfactor > 1 {
         return 1;
     }
@@ -18,12 +18,11 @@ pub fn calculate_busfactor(numcommits: f64, numcontributors: f64, numfiles: f64)
         return busfactor
     }   
     
-
 }
 
 fn main(){
     let args : Vec<string> = env::args().collect();                         //Input the arguments into vector args
-    let numberofcommits : f64 = args[1].parse().unwrap();                         //Converts the string values into a f64 value 
+    let numberofcommits : f64 = args[1].parse().unwrap();                   //Converts the string values into a f64 value 
     let numberofcontributors : f64 = args[2].parse().unwrap();
     let numberoffiles : f64 = args[3].parse().unwrap();
 
