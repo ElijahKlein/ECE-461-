@@ -9,7 +9,7 @@
 import sys
 import subprocess                                                               #Used for calling executables (Compiled Rust files) with arguements
 import os
-import collections
+import json
 
 from NetScoreCalculation.MetricCalculation.licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
@@ -43,9 +43,14 @@ with open(os.path.normpath(file), 'r') as f:
         #Obtain information from the contributors.py function
         repoSize = contributors.getNumFiles(url)
         numContributors = contributors.getNumContributors(url)
+        numCommits = 0
+        allCommits = contributors.getStatsContributors(url)
+        for contributor in allCommits:
+            numCommits += contributor.total
 
         #Obtain information from the issues.py function
-        numIssues = issues.getIssuesByType(url, 'open')
+        issueData = issues.getIssueData(url.split("github.com/", 1)[1])
+        numIssues = issueData['data']['repository']['open']['totalCount']
         numDownloads = issues.getUsers(url)
 
         #Obtain information from the pull_requests.py function
@@ -60,7 +65,7 @@ with open(os.path.normpath(file), 'r') as f:
         executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
 
         #Arguements for NetScore file using gathered data
-        args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} {numContributors}"
+        args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} {numContributors} {numCommits}"
 
         #Runs the net_score.rs file to obtain information about the scoring. Catches the output on dataString
         dataString = subprocess.run(executable + args, cwd=None, shell=False, stdout=subprocess.PIPE)
@@ -77,4 +82,3 @@ netScores = dict(sorted(netScores.items(), key=lambda x: x[1][0], reverse=True))
 #Prints the net score in JSON format
 for key in netScores:
     print(f"{{\"URL\":\"{key}\", \"NET_SCORE\":{netScores[key][0]}, \"RAMP_UP_SCORE\":{netScores[key][2]}, \"CORRECTNESS_SCORE\":{netScores[key][1]}, \"BUS_FACTOR_SCORE\":{netScores[key][4]}, \"RESPONSIVENESS_SCORE\":{netScores[key][3]}, \"LICENSE_SCORE\":{netScores[key][5]}}}")
-

@@ -10,16 +10,16 @@ use std::env;
 //calculate_readme will return a weighting for the ramp up time, based on the size of the readme
 pub fn calculate_rampup(readme_size: f64) -> f64{
     //Compare length of readme_file to base case value
-    if readme_size <= 25.0 {
+    if readme_size <= 25.0 {           //25 lines in readme
         return 0.0;
     }
-    else if readme_size <= 50.0 {
+    else if readme_size <= 50.0 {      //50 lines in readme
         return 0.1;
     }
-    else if readme_size <= 100.0 {
+    else if readme_size <= 100.0 {     //100 lines in readme
         return 0.2;
     }
-    else if readme_size <= 200.0 {
+    else if readme_size <= 200.0 {     //etc ...
         return 0.3;
     }
     else if readme_size <= 300.0 {

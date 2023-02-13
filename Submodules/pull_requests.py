@@ -33,7 +33,7 @@ def getAllPulls(url, type):
             pulls = repo.get_pulls(state=type)                                      #Grabs the list of pull requests
             return pulls.totalCount
         except:
-            return (datetime.now() - repo.creted_at).days;                          #No pull request, so return the creation date of the repo
+            return (datetime.now() - repo.created_at).days;                         #No pull request, so return the creation date of the repo
     except:
         print("Error in getAllPullDates")
 
@@ -41,16 +41,6 @@ def getAllPulls(url, type):
 def getCreationDate(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])
-        return (datetime.now() - repo.created_at).days
+        return (datetime.now() - repo.created_at).days                              #Returns days since creation
     except:
         print("Error in getCreationDate")
-        
-"""This below can be used for testing. Comment when not being used, or delete when finishing project
-url = sys.argv[1]
-date = getMostRecentPull(url, 'closed')
-print(datetime.now() - date)
-
-datesList = getAllPullDates(url, 'closed')
-print(datesList)
-"""
-

@@ -10,55 +10,56 @@ use std::env;
 
 //calculate_pulls with determine the submetric weighting for Pull Requests, with a 50/50 split on frequency and recency
 pub fn calculate_pulls(last_pull: f64, pull_frequency: f64) -> f64{
+    
     //First calculates the recency scoring
     let recency: f64;
-    if last_pull <= 7.0 {            //Less than 1 week
+    if last_pull <= 7.0 {                    //Less than 1 week
         recency = 1.0;
     }
-    else if last_pull <= 14.0 {      //Less than 2 weeks
+    else if last_pull <= 14.0 {              //Less than 2 weeks
         recency = 0.9;
     }
-    else if last_pull <= 30.0 {      //Less than 1 month
+    else if last_pull <= 30.0 {              //Less than 1 month
         recency = 0.8;
     }
-    else if last_pull <= 60.0 {      //Less than 2 months
+    else if last_pull <= 60.0 {              //Less than 2 months
         recency = 0.7; 
     }
-    else if last_pull <= 90.0 {      //Less than 3 months
+    else if last_pull <= 90.0 {              //Less than 3 months
         recency = 0.6;
     }
-    else if last_pull <= 120.0 {     //Less than 4 months
+    else if last_pull <= 120.0 {             //Less than 4 months
         recency = 0.5;
     }
-    else if last_pull <= 180.0 {     //Less than 6 months
+    else if last_pull <= 180.0 {             //Less than 6 months
         recency = 0.4;
     }
-    else if last_pull <= 240.0 {     //Less than 8 months
+    else if last_pull <= 240.0 {             //Less than 8 months
         recency = 0.3;
     }
-    else if last_pull <= 300.0 {     //Less than 10 months
+    else if last_pull <= 300.0 {             //Less than 10 months
         recency = 0.2;
     }
-    else if last_pull <= 365.0 {     //Less than a year
+    else if last_pull <= 365.0 {             //Less than a year
         recency = 0.1;
     }
     else {
-        recency = 0.0;               //Greater than a year
+        recency = 0.0;                       //Greater than a year
     }
 
     //Then calculates the pull frequency scoring
     let frequency : f64;
 
-    if pull_frequency <= 7.0 {
+    if pull_frequency <= 7.0 {               //1 pull request per week
         frequency = 1.0;
     }
-    else if pull_frequency <= 14.0 {
+    else if pull_frequency <= 14.0 {         //1 pull request per 2 weeks
         frequency = 0.9;
     }
-    else if pull_frequency <= 21.0 {
+    else if pull_frequency <= 21.0 {         //1 pull request per 3 weeks
         frequency = 0.8;
     }
-    else if pull_frequency <= 30.0{
+    else if pull_frequency <= 30.0{          //etc...
         frequency = 0.7;
     }
     else if pull_frequency <= 60.0 {
@@ -87,13 +88,13 @@ pub fn calculate_size(repo_size: f64, num_contributors: f64) -> f64 {
     //Get how many files per contributor
     let unweighted : f64 = repo_size / num_contributors;
     
-    if unweighted <= 0.5 {                   //0.5 files per cont
+    if unweighted <= 0.5 {                   //0.5 files per contributor
         return 1.0;
     }
-    else if unweighted <= 1.0 {              //1 file per cont
+    else if unweighted <= 1.0 {              //1 file per contributor
         return 0.9;
     }
-    else if unweighted <= 2.5 {              //2.5 files per cont
+    else if unweighted <= 2.5 {              //2.5 files per contributor
         return 0.8;
     }
     else if unweighted <= 5.0 {              //etc...
@@ -128,7 +129,7 @@ pub fn calculate_response(last_pull: f64, pull_frequency: f64, repo_size: f64, n
 
     let base_response : f64 = (pull_weight * 0.5) + (size_weight * 0.5);
 
-    //Returns a 1-digit weighting value, rounded down if needed
+    //Returns a 1-digit weighting value based on submetrics, rounded down if needed
     if base_response >= 1.0 {
         return 1.0;
     }

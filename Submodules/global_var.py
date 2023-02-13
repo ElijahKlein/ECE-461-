@@ -10,8 +10,9 @@ Name: Eric Chen
 
 from github import Github                                                       #Using PyGitHub for interaction with REST API
 import os.path as path
+import os
 
-token = Github('PUT TOKEN HERE')                                                #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
+token = Github(os.getenv('GITHUB_TOKEN'))                                       #Access token for REST API
 file_loc = path.dirname(__file__) + '/../clone_dir/temp'
 
 #set_file_loc will be used to keep a global variable of the working file directory for cloning
