@@ -41,7 +41,7 @@ for i in range(0, total):
 		assert(functions[i]) == answers[i]
 	except AssertionError as msg:
 		failCount += 1
-		print(total)
+		print(i)
 total += 1
 try:
 	assert(repo) != (None)
