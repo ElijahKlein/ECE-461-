@@ -18,12 +18,10 @@ def checkLicensing(repo):
             with open(os.path.join(targetFile, 'README' + ext), 'r') as f:
                 content = f.read()
                 if('MIT License' in content or 'LGPLv2.1 License' in content):      #Check the README for mention of compatable licenses
-                    print("FOUND IN README")
                     return 1
                 else:                                                                       #Attempt to look in the LICENSE file for information
                     try:
                         if open(os.path.join(targetFile, 'LICENSE')):
-                            print("Found in LICENSE")
                             return 1
                         else:
                             return 0                                                        #If license information not in README/LICENSE, return value 0
