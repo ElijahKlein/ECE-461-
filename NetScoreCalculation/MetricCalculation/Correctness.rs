@@ -1,5 +1,5 @@
  /*  Name: Matthew Nale
-  *  Date of Last Edit: 2/9/2023
+  *  Date of Last Edit: 2/12/2023
   *
   *  Purpose: Calculate Correctness Metric of a given Github Repository
   * 
@@ -14,19 +14,17 @@ pub fn calculate_correctness(open: f64, stars: f64) -> f64{
     //Grabs the ratio of open/total issues to users
     let total_weighting : f64 = open / stars;
 
-    //TODO Potentially add 70/30 or 80/20 weighting for total issues as well
-    //TODO Binding between 0 and 1 values. Values for conditions may change
-    //* Yes, this is disgusting to look at. Couldn't be bothered to find a easier way lol. Plus easier to read/understand I guess
-    if total_weighting  <= 0.0025{
+    //* Yes, this is disgusting to look at. Couldn't be bothered to find an easier way lol. Plus easier to read/understand I guess
+    if total_weighting  <= 0.0025{       //1 issue per 400 stars (1/0.0025)
         return 1.0;
     }
-    else if total_weighting <= 0.005{
+    else if total_weighting <= 0.005{    //1 issue per 200 stars (1/0.005)
         return 0.9;
     } 
-    else if total_weighting <= 0.01{
+    else if total_weighting <= 0.01{     //1 issue per 100 stars (1/0.01)
         return 0.8;
     }
-    else if total_weighting <= 0.015{
+    else if total_weighting <= 0.015{    //etc ...
         return 0.7;
     }
     else if total_weighting <= 0.02{
