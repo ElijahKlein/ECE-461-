@@ -7,7 +7,6 @@
 """
 
 import sys
-#import pytest
 from datetime import datetime
 import Submodules.global_var as gv
 from Submodules.repo_clone import clone_repo
@@ -30,115 +29,147 @@ failCount = 0
 
 repo = clone_repo(url)
 
+
 total += 1	
 try:
 	assert(repo) != None
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
 total += 1	
 try:
 	assert(npm2git("https://www.npmjs.com/package/express")) == "https://github.com/expressjs/express"
 except AssertionError as msg:
 	failCount += 1
-total += 1
-try:
-	assert(getDirectorySize(url)) == 5 #TODO - verify
-except AssertionError as msg:
-	failCount += 1
+	print(total)
+
 total += 1	
 try:
-	assert(getDirectorySize(url)) == 19
+	assert(getDirectorySize(url)) == 19 #TODO - Verify
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
 total += 1	
 try:
 	assert(issues.getIssuesByType(url, 'open')) == 6
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
 total += 1	
 try:
 	assert(issues.getIssuesByType(url, 'closed')) == 4
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
 total += 1	
 try:
 	assert(issues.getUsers(url)) == 1
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
 total += 1	
 try:
 	assert(pulls.getMostRecentPull(url, 'closed')) == (datetime.now() - datetime(2023, 2, 11, 20, 42)).days
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
 total += 1	
 try:
 	assert(pulls.getMostRecentPull(url, 'open')) == None #TODO - verify
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
 total += 1	
 try:
 	assert(pulls.getAllPulls(url, 'closed')) == 2
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
 total += 1	
 try:
 	assert(pulls.getAllPulls(url, 'open')) == 0
 except AssertionError as msg:
 	failCount += 1
+	print(total)
 total += 1	
 try:
 	assert(pulls.getCreationDate(url)) == (datetime.now() - datetime(2023, 2, 11, 19, 4)).days
 except AssertionError as msg:
 	failCount += 1
+	print(total)
 total += 1	
 try:
 	assert(readme.checkLicensing(repo)) == 1 #TODO - verify
 except AssertionError as msg:
 	failCount += 1
+	print(total)
 total += 1	
 try:
 	assert(readme.checkRMLength(repo)) == 707
 except AssertionError as msg:
 	failCount += 1
+	print(total)
+
+
+
+
+
 total += 1	
+numContrib = contrib.getNumContributors(url).totalCount
 try:
-	assert(contrib.getNumContributors(url)) == 2
+	#print(f'NumContrib: {contrib.getNumContributors(url)}')
+	assert(contrib.getNumContributors(url).totalCount) == 2
 except AssertionError as msg:
 	failCount += 1
+	print("fail 1")
 total += 1	
+numFiles = contrib.getNumFiles(url)
 try:
 	assert(contrib.getNumFiles(url)) == 5 #TODO - verify
 except AssertionError as msg:
 	failCount += 1
-print(contrib.getStatsContributors(url))
+	print("fail 2")
+	
+	
+#TODO - This Fails
+total += 1	
+try:
+	#print(f'ContribStats: {contrib.getStatsContributors(url)}')
+	assert(contrib.getStatsContributors(url)) == 5 #TODO - verify
+except AssertionError as msg:
+	failCount += 1
+	print("fail 3")
+	
+#TODO - This Fails
+total += 1	
+try:
+	#print(f'commitactivity: {contrib.getStatsCommitActivity(url)}')
+	assert(contrib.getStatsCommitActivity(url)) == 5 #TODO - verify
+except AssertionError as msg:
+	failCount += 1
+	print("fail 4")
+total += 1	
+try:
+	assert(contrib.calcContributorsPerFile(numContrib, numFiles)) == 0.4 #TODO - verify
+except AssertionError as msg:
+	failCount += 1
+	print("fail 5")
+
+
+
 
 
 print(f'{total - failCount}/{total} test cases passed. Z% line coverage achieved.')
 
 
 
-"""
-
-total += 1	
-try:
-	assert( ) == 
-except AssertionError as msg:
-	failCount += 1
 
 
-
-license_score = calculateLicenseScore(repo)                                     #license_score is determined by the evaluate_readme function in Licensing.py
-print(f'License scoring: {license_score}')
-
-numIssues = issues.getIssuesByType(url, 'open')                                 #Example usage of the getIssuesByTypes function, which obtains the number of open issues
-print(f'Number of open issues: {numIssues}')
-numIssues = issues.getIssuesByType(url, 'closed')                                 #Example usage of the getIssuesByTypes function, which obtains the number of open issues
-print(f'Number of closed issues: {numIssues}')
-numDownloads = issues.getUsers(url)                                             #Example usage of the getUsers function, which obtains the number of downloads of the repo
-print(numDownloads)
-
-recentPull = pulls.getMostRecentPull(url, 'closed')                             #Example usage of the getMostRecentPull function, which obtaines the most recent closed pull request
-print(f'The most recent pull request was: {recentPull} time ago')
-#pullDates = pulls.getAllPullDates(url, 'closed')                               #Example usage of the getAllPullDates function, which obtains a list of all Pull Request dates
-#print(pullDates)
-"""
