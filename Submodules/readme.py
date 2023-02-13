@@ -16,15 +16,17 @@ def checkLicensing(repo):
         try:                                                                    
             targetFile = repo.working_tree_dir
             with open(os.path.join(targetFile, 'README' + ext), 'r') as f:
-                if(f.read().find('MIT License') or f.read().find('LGPLv2.1 License')):      #Check the README for mention of compatable licenses
+                content = f.read()
+                if('MIT License' in content or 'LGPLv2.1 License' in content):      #Check the README for mention of compatable licenses
+                    print("FOUND IN README")
                     return 1
                 else:                                                                       #Attempt to look in the LICENSE file for information
                     try:
-                        with open(os.path.join(targetFile, 'LICENSE')) as f:
-                            if(f.read().find('MIT License') or f.read().find('LGPLv2.1 License')):
-                                return 1
-                            else:
-                                return 0                                                    #If license information not in README/LICENSE, return value 0
+                        if open(os.path.join(targetFile, 'LICENSE')):
+                            print("Found in LICENSE")
+                            return 1
+                        else:
+                            return 0                                                        #If license information not in README/LICENSE, return value 0
                     except:
                         pass                                                                #No LICENSE file and not in README
             f.close()
