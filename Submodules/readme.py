@@ -17,21 +17,18 @@ def checkLicensing(repo):
             targetFile = repo.working_tree_dir
             with open(os.path.join(targetFile, 'README' + ext), 'r') as f:
                 content = f.read()
-                if('MIT License' in content or 'LGPLv2.1 License' in content):      #Check the README for mention of compatable licenses
+                if('mit license' in content.lower() or 'lgplv2.1 license' in content.lower()):      #Check the README for mention of compatable licenses
                     return 1
                 else:                                                                       #Attempt to look in the LICENSE file for information
                     try:
                         if open(os.path.join(targetFile, 'LICENSE')):
-                            return 1
-                        else:
-                            return 0                                                        #If license information not in README/LICENSE, return value 0
+                            return 1                                                        
                     except:
                         pass                                                                #No LICENSE file and not in README
             f.close()
-        except:                  #If the clone_from fails, the scoring automatically is a 0, as there is not README to check for compatability
+        except:
             pass
-    print("Error in checkLicensing")
-    return -1;
+    return 0;
 
 def checkRMLength(repo):
     for ext in [".md", ".markdown"]:
