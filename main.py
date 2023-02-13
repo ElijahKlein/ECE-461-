@@ -11,7 +11,7 @@ import subprocess                                                               
 import os
 import json
 
-from NetScoreCalculation.MetricCalculation.Licensing import calculateLicenseScore
+from NetScoreCalculation.MetricCalculation.licensing import calculateLicenseScore
 from Submodules.repo_clone import clone_repo
 import Submodules.readme as rm
 import Submodules.issues as issues
