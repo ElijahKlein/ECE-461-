@@ -33,8 +33,8 @@ functions = [npm2git("https://www.npmjs.com/package/express"), issues.getUsers(u
 
 answers = ["https://github.com/expressjs/express", 1, (datetime.now() - datetime(2023, 2, 12, 1, 42)).days, 0, 2, 0, 0, 1, (datetime.now() - datetime(2023, 2, 12, 9, 14)).days, 1, 707, 2, 5, 9, 9, 0, 0, (datetime.now() - datetime(2020, 5, 23)).days, 4]
 
-print(f'len: {len(functions)}')
-print(f'len: {len(answers)}')
+#print(f'len: {len(functions)}')
+#print(f'len: {len(answers)}')
 total = len(functions)
 for i in range(0, total):
 	try:
