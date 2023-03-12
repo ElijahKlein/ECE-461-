@@ -45,8 +45,11 @@ with open(os.path.normpath(file), 'r') as f:
         numContributors = contributors.getNumContributors(url)
         numCommits = 0
         allCommits = contributors.getStatsContributors(url)
-        for contributor in allCommits:
-            numCommits += contributor.total
+        if allCommits is not None:
+            for contributor in allCommits:
+                numCommits += contributor.total
+        else:
+            numCommits = 0
 
         #Obtain information from the issues.py function
         issueData = issues.getIssueData(url.split("github.com/", 1)[1])
