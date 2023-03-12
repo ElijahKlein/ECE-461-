@@ -7,8 +7,14 @@ Description: Defines functionality to return contributor and file information ab
 Input: url = The url for the Github repo
 """
 
+<<<<<<< HEAD
 import Submodules.globar_var as gv
 #Retrieves the number of contributors for a given repo
+=======
+import Submodules.global_var as gv
+
+#getNumContributors retrieves the number of contributors for a given repo
+>>>>>>> fbe5fda0fc06c593210631a37854a592c164ee64
 def getNumContributors(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API
@@ -17,8 +23,13 @@ def getNumContributors(url):
     except:
         print("Error retrieving the number of contributors")        #Error trap
         
+<<<<<<< HEAD
 #Retrieves the number of files in a given repo          
 def getNumFiles(url, token):
+=======
+#getNumFikes retrieves the number of files in a given repo          
+def getNumFiles(url):
+>>>>>>> fbe5fda0fc06c593210631a37854a592c164ee64
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API 
         contents = repo.get_contents("")                            #Get all files contained in the repo
@@ -33,13 +44,19 @@ def getNumFiles(url, token):
         return len(numFiles)                                        #Return the length of the list
     except:
         print("Error retrieving the number of files")               #Error trap
+<<<<<<< HEAD
 #Retrives commit counts from each individual contributor. 
+=======
+        
+#getStatsContributors retrives commit counts from each individual contributor. 
+>>>>>>> fbe5fda0fc06c593210631a37854a592c164ee64
 def getStatsContributors(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1]) 
         statsContributors = repo.get_stats_contributors()
         return statsContributors
     except:
+<<<<<<< HEAD
         print("Error retrieving the stats of contributors")
 
 #Unused functionality: 
@@ -54,3 +71,6 @@ def getStatsCommitActivity(url):
         print("Error retrieving the stats of commits")
 '''
 
+=======
+        print("Error retrieving the stats of contributors")
+>>>>>>> fbe5fda0fc06c593210631a37854a592c164ee64

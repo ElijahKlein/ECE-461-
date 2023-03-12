@@ -11,6 +11,7 @@
 #	URL_FILE - runs net score and metric calculations for all GitHub or npm repositories listed in the URL_FILE
 
 
+
 #installFunc - installs all required dependencies
 installFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
@@ -42,6 +43,17 @@ installFunc () {
 		installedCount=$((installedCount+1))
 	fi
 
+	#Installs the Coverage.py library to measure code coverage
+	#https://coverage.readthedocs.io/en/7.1.0/
+	if [[ $LOG_LEVEL -eq 2 ]]; then
+		echo "Installing coverage.py" >> $LOG_FILE
+		pip install coverage >> $LOG_FILE	
+		installedCount=$((installedCount+1))
+	else
+		pip install coverage >> /dev/null 
+		installedCount=$((installedCount+1))
+	fi
+
 	#Installs the pytest library for testing purposes 
 	#https://docs.pytest.org/en/7.2.x/getting-started.html#get-started
 	if [[ $LOG_LEVEL -eq 2 ]]; then
@@ -62,6 +74,7 @@ installFunc () {
 	return 0
 }
 
+
 #buildFunc - compiles all relevant code 
 buildFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
@@ -69,18 +82,6 @@ buildFunc () {
 	fi
 
 	#Compiling structure of all relevant files including error checking and logging
-	#rustc -A dead_code ErrorTesting/ErrorTest.rs  
-	#[ -s ErrorTest.exe ] 
-	#if [[ $? -ne 0 ]]; then
-	#	echo "Failed Build: ErrorTest.rs"
-	#	if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
-	#		echo "Failed Build: ErrorTest.rs" >> $LOG_FILE
-	#	fi
-	#	return 1
-	#elif [[ $LOG_LEVEL -eq 2 ]]; then
-	#	echo "Successful build: ErrorTest.rs" >> $LOG_FILE
-	#fi
-	
 	rustc -A dead_code NetScoreCalculation/net_score.rs  
 	[ -s net_score.exe ] 
 	if [[ $? -ne 0 ]]; then
@@ -117,7 +118,7 @@ buildFunc () {
 		echo "Successful build: correctness.rs" >> $LOG_FILE
 	fi
 	
-	rustc -A dead_code NetScoreCalculation/MetricCalculation/ramp_up.rs
+	rustc -A warnings -A dead_code NetScoreCalculation/MetricCalculation/ramp_up.rs
 	[ -s ramp_up.exe ] 
 	if [[ $? -ne 0 ]]; then
 		echo "Failed Build: ramp_up.rs"
@@ -129,16 +130,16 @@ buildFunc () {
 		echo "Successful build: ramp_up.rs" >> $LOG_FILE
 	fi
 	
-	rustc -A dead_code NetScoreCalculation/MetricCalculation/responsiveness.rs
-	[ -s responsiveness.exe ] 
+	rustc -A dead_code NetScoreCalculation/MetricCalculation/Responsiveness.rs
+	[ -s Responsiveness.exe ] 
 	if [[ $? -ne 0 ]]; then
-		echo "Failed Build: responsiveness.rs"
+		echo "Failed Build: Responsiveness.rs"
 		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
-			echo "Failed Build: responsiveness.rs" >> $LOG_FILE
+			echo "Failed Build: Responsiveness.rs" >> $LOG_FILE
 		fi
 		return 1
 	elif [[ $LOG_LEVEL -eq 2 ]]; then
-		echo "Successful build: responsiveness.rs" >> $LOG_FILE
+		echo "Successful build: Responsiveness.rs" >> $LOG_FILE
 	fi
 	
 
@@ -159,7 +160,7 @@ testFunc () {
 	#status=$(./ErrorTest)
 	
 	status=0
-	status= python ErrorTest.py
+	status= python3 ErrorTest.py
 	
 
 	if [[ $status -ne 0 ]]; then
@@ -186,7 +187,7 @@ netScoreFunc () {
 	URL_FILE=$1
 	
 	if [[ -f "$URL_FILE" ]]; then
-		status= python main.py $URL_FILE
+		status= python3 main.py $URL_FILE
 	else 
 		echo "Error: $URL_FILE does not exist" 
 		return 1
@@ -217,16 +218,16 @@ if [[ "$1" == "install" ]]; then
 
 elif [[ "$1" == "build" ]]; then
 	output=$(buildFunc)
-	#echo $output
+	#echo "$output"
 	status=$?
 
 elif [[ "$1" == "test" ]]; then
 	output=$(testFunc)
-	#echo $output
+	echo $output
 	status=$?
 elif [[ -f "$1" ]]; then
-	output=$(netScoreFunc $1)
-	echo $output
+	netScoreFunc $1
+	#echo $output
 	status=$?
 else
 	status = 1
