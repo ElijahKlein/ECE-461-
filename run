@@ -105,16 +105,16 @@ buildFunc () {
 		echo "Successful build: bus_factor.rs" >> $LOG_FILE
 	fi
 	
-	rustc -A dead_code NetScoreCalculation/MetricCalculation/correctness.rs
+	rustc -A dead_code NetScoreCalculation/MetricCalculation/Correctness.rs
 	[ -s correctness.exe ] 
 	if [[ $? -ne 0 ]]; then
-		echo "Failed Build: correctness.rs"
+		echo "Failed Build: Correctness.rs"
 		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
-			echo "Failed Build: correctness.rs" >> $LOG_FILE
+			echo "Failed Build: Correctness.rs" >> $LOG_FILE
 		fi
 		return 1
 	elif [[ $LOG_LEVEL -eq 2 ]]; then
-		echo "Successful build: correctness.rs" >> $LOG_FILE
+		echo "Successful build: Correctness.rs" >> $LOG_FILE
 	fi
 	
 	rustc -A warnings -A dead_code NetScoreCalculation/MetricCalculation/ramp_up.rs
