@@ -1,6 +1,6 @@
 """ 
 Name: Matthew Nale
-    Date of Last Edit: 2/5/2023
+    Date of Last Edit: 2/12/2023
     
     Purpose: Performs all README operations, which can be called from any other function
 
@@ -8,33 +8,33 @@ Name: Matthew Nale
 
 """
 
-import git                                                                  #Using GitPython for 'import git'
+import git                                                                                  #Using GitPython for 'import git'
 import os
 
 def checkLicensing(repo):
-    scoring = 0
-    try:                                                                    #Open the targetFile (README) for compatability checking
-        targetFile = repo.working_tree_dir
-        with open(os.path.join(targetFile, 'README.md'), 'r') as f:
-            if(f.read().find('MIT License')):
-                scoring = 1
-            else:                                                           #If not located in the README, check the LICENSE file for compatability
-                try:
-                    with open(os.path.join(targetFile, 'LICENSE')) as f:
-                        if(f.read().find('MIT License')):
-                            scoring = 1
-                except:
-                    scoring = 0
-        f.close()
-    except:                                                                 #If the clone_from fails, the scoring automatically is a 0, as there is not README to check for compatability
-        scoring = 0
-    return scoring
+    for ext in [".md", ".markdown"]:                                                        #Checking for multiple file extensions
+        try:                                                                    
+            targetFile = repo.working_tree_dir
+            with open(os.path.join(targetFile, 'README' + ext), 'r') as f:
+                content = f.read()
+                if('mit license' in content.lower() or 'lgplv2.1 license' in content.lower()):      #Check the README for mention of compatable licenses
+                    return 1
+                else:                                                                       #Attempt to look in the LICENSE file for information
+                    try:
+                        if open(os.path.join(targetFile, 'LICENSE')):
+                            return 1                                                        
+                    except:
+                        pass                                                                #No LICENSE file and not in README
+            f.close()
+        except:
+            pass
+    return 0;
 
 def checkRMLength(repo):
-    try:
-        targetFile = os.path.join(repo.working_tree_dir, 'README.md')                                    
-        numLines = sum(1 for line in open(targetFile, 'r'))
-        return numLines
-    except:
-        print("No possible README to analyze")                              #If cannot open README (doesn't exist), numLines stays 0, which will cause a weight of zero
-    
+    for ext in [".md", ".markdown"]:
+        try:
+            targetFile = os.path.join(repo.working_tree_dir, 'README' + ext)                                          
+            numLines = sum(1 for line in open(targetFile, 'r'))                             #Calculates number of lines in the readme with sum() function
+            return numLines
+        except:
+            return 0                                                                        #No README detected
