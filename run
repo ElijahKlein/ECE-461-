@@ -11,6 +11,7 @@
 #	URL_FILE - runs net score and metric calculations for all GitHub or npm repositories listed in the URL_FILE
 
 
+
 #installFunc - installs all required dependencies
 installFunc () {
 	if [[ $LOG_LEVEL -eq 2 ]]; then
