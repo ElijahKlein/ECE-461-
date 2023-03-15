@@ -45,8 +45,11 @@ with open(os.path.normpath(file), 'r') as f:
         numContributors = contributors.getNumContributors(url)
         numCommits = 0
         allCommits = contributors.getStatsContributors(url)
-        for contributor in allCommits:
-            numCommits += contributor.total
+        if allCommits is not None:
+            for contributor in allCommits:
+                numCommits += contributor.total
+        else:
+            numCommits = 0
 
         #Obtain information from the issues.py function
         issueData = issues.getIssueData(url.split("github.com/", 1)[1])
@@ -59,7 +62,10 @@ with open(os.path.normpath(file), 'r') as f:
         creationDate = pulls.getCreationDate(url)
 
         #Calculates the pull request frequency since the creation of the repo
-        pullFrequency = creationDate / pullTotal
+        if pullTotal is not None and pullTotal != 0:
+            pullFrequency = creationDate / pullTotal
+        else:
+            pullFrequency = 0
 
         #Sets the rust executable path
         executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
