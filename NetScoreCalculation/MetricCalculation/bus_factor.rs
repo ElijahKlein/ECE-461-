@@ -7,25 +7,26 @@
 */
 use std::env;
 
-//calculate_busfactor will determine the Bus Factor weighting for the Net Score total
 pub fn calculate_busfactor(numcommits: f64, numcontributors: f64, numfiles: f64) -> f64{
-
-    let busfactor: f64;
-    busfactor = (0.5) * ((numcontributors / numcommits) + (numcontributors / numfiles)); //Calculate the score as an average between two metrics
-    if busfactor > 1.0 {
-        return 1.0;
+    
+    let mut busfactor: f64 = 0.0;
+    busfactor = (0.5) * ((numcontributors / numcommits) + (numcontributors / numfiles)) //Calculate the score as an average between two metrics
+    if busfactor > 1 {
+        return 1;
     }
     else {
-        return f64::trunc(busfactor * 10.0) / 10.0;
+        return busfactor
     }   
+    
 }
 
 fn main(){
-    let args : Vec<String> = env::args().collect();                                     //Input the arguments into vector args
-    let numberofcommits : f64 = args[1].parse().unwrap();                               //Converts the string values into a f64 value 
+    let args : Vec<string> = env::args().collect();                         //Input the arguments into vector args
+    let numberofcommits : f64 = args[1].parse().unwrap();                   //Converts the string values into a f64 value 
     let numberofcontributors : f64 = args[2].parse().unwrap();
     let numberoffiles : f64 = args[3].parse().unwrap();
 
     let contributor_score = calculate_busfactor(numberofcommits, numberofcontributors, numberoffiles);
     println!("Contributors weighting: {contributor_score}");
 }
+

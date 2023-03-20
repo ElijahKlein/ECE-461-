@@ -1,5 +1,0 @@
-{"metric":"RAMP_UP_SCORE", "api":"clone", "filepath":"Submodules/readme.py", "line":40}
-{"metric":"BUS_FACTOR_SCORE", "api":"rest", "filepath":"Submodules/contributors.py", "line":15}
-{"metric":"CORRECTNESS_SCORE", "api":"graphql", "filepath":"Submodules/issues.py", "line":20}
-{"metric":"LICENSE_SCORE", "api":"clone", "filepath":"Submodules/readme.py", "line":18}
-{"metric":"RESPONSIVENESS_SCORE", "api":"rest", "filepath":"Submodules/pull_requests.py", "line":21}

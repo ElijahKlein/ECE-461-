@@ -7,9 +7,8 @@ Description: Defines functionality to return contributor and file information ab
 Input: url = The url for the Github repo
 """
 
-import Submodules.global_var as gv
-
-#getNumContributors retrieves the number of contributors for a given repo
+import Submodules.globar_var as gv
+#Retrieves the number of contributors for a given repo
 def getNumContributors(url):
     try:
         repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API
@@ -42,3 +41,16 @@ def getStatsContributors(url):
         return statsContributors
     except:
         print("Error retrieving the stats of contributors")
+
+#Unused functionality: 
+#Retrieves the commits activity over the last year for a given repo
+'''
+def getStatsCommitActivity(url):
+    try:
+        repo = gv.token.get_repo(url.split("github.com/", 1)[1])    #Obtain the repo from rest API 
+        statsCommitActivity = repo.get_stats_commit_activity()      #Get the repo's commit activity from the last year
+        return statsCommitActivity                                  #Return this activity
+    except:
+        print("Error retrieving the stats of commits")
+'''
+

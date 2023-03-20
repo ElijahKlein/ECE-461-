@@ -12,7 +12,7 @@ from github import Github                                                       
 import os.path as path
 import os
 
-token = Github(os.getenv('GITHUB_TOKEN'))                                       #Access token for REST API
+token = Github(os.getenv('GITHUB_TOKEN'))                                                #! MY ACCESS TOKEN, DO NOT SHARE. PUT YOUR OWN TOKEN HERE FOR NOW
 file_loc = path.dirname(__file__) + '/../clone_dir/temp'
 
 #set_file_loc will be used to keep a global variable of the working file directory for cloning
