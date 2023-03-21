@@ -63,33 +63,26 @@ with open(os.path.normpath(file), 'r') as f:
 
         #Calculates the pull request frequency since the creation of the repo
         if pullTotal is not None and pullTotal != 0:
-            pullFrequency = creationDate / pullTotal
+            pullFrequency = round(creationDate / pullTotal, 2)
         else:
             pullFrequency = 0
 
         #Sets the rust executable path
-        executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe"
-        #executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
+        executable = os.path.dirname(__file__) + './net_score'
 
         #Arguements for NetScore file using gathered data
         args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} {numContributors} {numCommits}"
+	
+        cmd = [executable, args]
 
         #Runs the net_score.rs file to obtain information about the scoring. Catches the output on dataString
-        #f = open("logs.txt", "w")
-        #f.write(executable + args)
-        #f.write(f'\nExecutable: {executable} \n')
-        #f.write(f'args:{args} \n')
-        dataString = subprocess.run([executable, args], cwd=None, shell=False, stdout=subprocess.PIPE)
-        #f.write(f'dataString 1: {dataString} \n')
-        #f.write(f'stdOut: {dataString.stdout} \n')
+        dataString = subprocess.run(cmd, shell=False, stdout=subprocess.PIPE)
+        
         #Splits the output string by delimiters
-        dataString = (dataString.stdout.decode('utf-8')).split(" ") 
+        dataString = (dataString.stdout.decode('utf-8')).split(" ")
         
         #Converts ouput string into list of floats
-        #f.write(f'dataString: {dataString} \n')
-        #f.write(f'dataString type: {dataString.type()} \n')
-        #f.close()
-        netScores[url_in] = list(map(float, dataString)) #TODO - this is broken, cannot convert string to float
+        netScores[url_in] = list(map(float, dataString))
 
 #Sort the directory by net score values
 netScores = dict(sorted(netScores.items(), key=lambda x: x[1][0], reverse=True))
