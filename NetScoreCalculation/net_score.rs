@@ -9,6 +9,8 @@
 
 use std::env;
 
+//use std::fs; //TODO - for testing, delete
+
 //TODO This is a way to import Rust modules into other Rust files. License.py is excluded due to weird interactions
 #[path = "MetricCalculation/Correctness.rs"] mod correctness;
 #[path = "MetricCalculation/ramp_up.rs"] mod ramp_up;
@@ -37,5 +39,8 @@ fn main() {
 
     let mut net_score : f64 = ((5.0 * bus_base) + (4.0 * response_base) + (3.0 * correct_base) + (2.0 * ramp_base) + license_base) / 15.0;   //Net Score Total Calculation
     net_score = f64::trunc(net_score * 100.0) / 100.0;  //Rounding to 2 decimal places
+    
+    //fs::write("foo.txt", "{net_score} {correct_base} {ramp_base} {response_base} {bus_base} {license_base}");//.expect("Unable to write file"); TODO - for testing, delete
+    
     print!("{net_score} {correct_base} {ramp_base} {response_base} {bus_base} {license_base}");   //Print to stdout
 }
