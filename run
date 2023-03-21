@@ -83,7 +83,7 @@ buildFunc () {
 
 	#Compiling structure of all relevant files including error checking and logging
 	rustc -A dead_code NetScoreCalculation/net_score.rs  
-	[ -s net_score.exe ] 
+	[ -s net_score ] 
 	if [[ $? -ne 0 ]]; then
 		echo "Failed Build: net_score.rs"
 		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
@@ -93,9 +93,9 @@ buildFunc () {
 	elif [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Successful build: net_score.rs" >> $LOG_FILE
 	fi
-	
+
 	rustc -A dead_code NetScoreCalculation/MetricCalculation/bus_factor.rs
-	[ -s bus_factor.exe ] 
+	[ -s bus_factor ] 
 	if [[ $? -ne 0 ]]; then
 		echo "Failed Build: bus_factor.rs"
 		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
@@ -105,9 +105,9 @@ buildFunc () {
 	elif [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Successful build: bus_factor.rs" >> $LOG_FILE
 	fi
-	
+
 	rustc -A dead_code NetScoreCalculation/MetricCalculation/Correctness.rs
-	[ -s correctness.exe ] 
+	[ -s Correctness ] 
 	if [[ $? -ne 0 ]]; then
 		echo "Failed Build: Correctness.rs"
 		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
@@ -117,9 +117,9 @@ buildFunc () {
 	elif [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Successful build: Correctness.rs" >> $LOG_FILE
 	fi
-	
+
 	rustc -A warnings -A dead_code NetScoreCalculation/MetricCalculation/ramp_up.rs
-	[ -s ramp_up.exe ] 
+	[ -s ramp_up ] 
 	if [[ $? -ne 0 ]]; then
 		echo "Failed Build: ramp_up.rs"
 		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
@@ -129,9 +129,9 @@ buildFunc () {
 	elif [[ $LOG_LEVEL -eq 2 ]]; then
 		echo "Successful build: ramp_up.rs" >> $LOG_FILE
 	fi
-	
+
 	rustc -A dead_code NetScoreCalculation/MetricCalculation/Responsiveness.rs
-	[ -s Responsiveness.exe ] 
+	[ -s Responsiveness ] 
 	if [[ $? -ne 0 ]]; then
 		echo "Failed Build: Responsiveness.rs"
 		if [[ $LOG_LEVEL -eq 2 || $LOG_LEVEL -eq 1 ]]; then
