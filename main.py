@@ -63,18 +63,21 @@ with open(os.path.normpath(file), 'r') as f:
 
         #Calculates the pull request frequency since the creation of the repo
         if pullTotal is not None and pullTotal != 0:
-            pullFrequency = creationDate / pullTotal
+            pullFrequency = round(creationDate / pullTotal, 2)
         else:
             pullFrequency = 0
 
         #Sets the rust executable path
-        executable = os.path.dirname(__file__) + "/NetScoreCalculation/net_score.exe "
+        executable = os.path.dirname(__file__) + '/net_score'
+        #executable = os.path.dirname(__file__) + './net_score'
 
         #Arguements for NetScore file using gathered data
         args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} {numContributors} {numCommits}"
+	
+        cmd = [executable, args]
 
         #Runs the net_score.rs file to obtain information about the scoring. Catches the output on dataString
-        dataString = subprocess.run(executable + args, cwd=None, shell=False, stdout=subprocess.PIPE)
+        dataString = subprocess.run(cmd, shell=False, stdout=subprocess.PIPE)
         
         #Splits the output string by delimiters
         dataString = (dataString.stdout.decode('utf-8')).split(" ")
