@@ -68,7 +68,8 @@ with open(os.path.normpath(file), 'r') as f:
             pullFrequency = 0
 
         #Sets the rust executable path
-        executable = os.path.dirname(__file__) + './net_score'
+        executable = os.path.dirname(__file__) + '/net_score'
+        #executable = os.path.dirname(__file__) + './net_score'
 
         #Arguements for NetScore file using gathered data
         args = f"{license_score} {numIssues} {numDownloads} {readmeLength} {recentPull} {pullFrequency} {repoSize} {numContributors} {numCommits}"
